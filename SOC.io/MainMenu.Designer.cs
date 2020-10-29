@@ -152,6 +152,7 @@
             this.barChartGraph.Size = new System.Drawing.Size(256, 169);
             this.barChartGraph.TabIndex = 17;
             this.barChartGraph.Text = "barChart";
+            this.barChartGraph.Visible = false;
             this.barChartGraph.Child = this.cartesianChart1;
             // 
             // countryNameResponse
@@ -280,7 +281,6 @@
             this.urlReputationTextbox.Name = "urlReputationTextbox";
             this.urlReputationTextbox.Size = new System.Drawing.Size(594, 20);
             this.urlReputationTextbox.TabIndex = 3;
-            
             // 
             // MainMenu
             // 

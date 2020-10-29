@@ -98,15 +98,12 @@ namespace SOCio.URL_Reputation
 
         private bool checkHostname(string input)
         {
-            string ValidHostnameRegex = @"^(([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z]|[A-Za-z][A-Za-z0-9\-]*[A-Za-z0-9])$";
+            //HTTP and HTTPs is accepted
+            Uri uriResult;
+            bool result = Uri.TryCreate(input, UriKind.Absolute, out uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
 
-            if (Regex.IsMatch(input, ValidHostnameRegex))
-            {
-                // the string is a host
-                return true;
-            }
-
-            return false;
+            return result;
         }
 
         private void PerformScans() {
@@ -123,22 +120,33 @@ namespace SOCio.URL_Reputation
             maltiverse = new Maltiverse();
             urlscanio = new URLScanIO();
 
-            if (checkHostname(input))
+            try
             {
-                Logger.Debug("Ther user wrote a hostname: " + input);
-                IPHostEntry hostEntry;
-                hostEntry = Dns.GetHostEntry(input);
-                //After a DNS resolution, we 
+                if (checkHostname(input))
+                {
+                    Logger.Debug("Ther user wrote a hostname: " + input);
+                    //IPHostEntry hostEntry;
+                    //hostEntry = Dns.GetHostEntry(input);
 
-                //Task.Factory.StartNew(() => abuseIPDB.getResult(Convert.ToString(hostEntry.AddressList[0])));
-                //Task.Factory.StartNew(() => maltiverse.getResult("hostname", input));
-                Task.Factory.StartNew(() => urlscanio.getResult(input));
+                    Uri myUri = new Uri(input);
+                    var ip = Dns.GetHostAddresses(myUri.Host)[0];
+
+                    //After a DNS resolution, we can get more than 1 result. We will always us the first one. 
+                    //If the user wants another IP, it can be written directly on the form.
+
+                    //Task.Factory.StartNew(() => abuseIPDB.getResult(Convert.ToString(hostEntry.AddressList[0])));
+                    //Task.Factory.StartNew(() => maltiverse.getResult("hostname", input));
+                    Task.Factory.StartNew(() => urlscanio.getResult(input));
+                }
+                else
+                {
+                    Logger.Debug("Ther user wrote an IP: " + input);
+                    //Task.Factory.StartNew(() => abuseIPDB.getResult(input));
+                    Task.Factory.StartNew(() => maltiverse.getResult("ip", input));
+                }
             }
-            else
-            {
-                Logger.Debug("Ther user wrote an IP: " + input);
-                //Task.Factory.StartNew(() => abuseIPDB.getResult(input));
-                Task.Factory.StartNew(() => maltiverse.getResult("ip", input));
+            catch (Exception ex) {
+                Logger.Error($"Error creating async functions: {ex.StackTrace} - {ex.Message}" );
             }
 
 
@@ -230,6 +238,7 @@ namespace SOCio.URL_Reputation
         }
 
         #endregion
+
 
 
         private void exportResultsButton_Click(object sender, EventArgs e)

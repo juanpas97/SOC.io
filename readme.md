@@ -12,6 +12,7 @@ Modules:
 SOC.&#8203;io uses:
 
 * [.NET Framework](https://dotnet.microsoft.com/download/dotnet-framework/net472) - Framework for creating Windows applications.
+* [LiveCharts](https://lvcharts.net/) - Simple, flexible, interactive & powerful data visualization for .Net
 
 ### Todos
 This section is divided into new functionalities and/or bug fixed for the different modules: 
@@ -21,6 +22,7 @@ This section is divided into new functionalities and/or bug fixed for the differ
     - [New functionality] Add the option to add the ApiKeys through here
 - Misc
     - Integrate with Travis-CI (https://travis-ci.org/)
+    - Integrate with SonarCloud (https://sonarcloud.io/)
     
 ## Compilation
 

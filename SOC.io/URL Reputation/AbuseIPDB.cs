@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 using System.Configuration;
 using System.Collections.Specialized;
-using Newtonsoft.Json.Linq;
 using log4net;
 using System.Reflection;
 using System.Net;
-using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 
 namespace SOCio.URLReputation
@@ -78,7 +76,7 @@ namespace SOCio.URLReputation
                         if (!string.IsNullOrEmpty(responseUnparsed))
                         {
                             //The best way to parse this would be using the JSON info. I have not been able to do it. We will use RegExp instead
-                            //of string functions to gain a bit of performance.
+                            //TODO: Parse this into string operation to gain performance.
                             this.ipAddress = Regex.Match(responseUnparsed, @"ipAddress"":""" + "(.+?)\"").Groups[1].Value;
                             this.abuseConfidenceScore = Convert.ToInt32(Regex.Match(responseUnparsed, @"abuseConfidenceScore"":" +"(.+?),").Groups[1].Value);
                             this.countryName = Regex.Match(responseUnparsed, @"countryName"":""" + "(.+?)\"").Groups[1].Value;

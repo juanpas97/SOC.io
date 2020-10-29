@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using LiveCharts;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -7,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SOCio.URL_Reputation
@@ -14,6 +16,12 @@ namespace SOCio.URL_Reputation
     public class URLScanIO
     {
         public ILog Logger { get; set; }
+
+        public int score = int.MinValue;
+
+        public string[] categories;
+
+        DateTime time;
 
         public URLScanIO() {
             this.Logger = LogManager.GetLogger(Assembly.GetExecutingAssembly().GetTypes().First());
@@ -23,20 +31,140 @@ namespace SOCio.URL_Reputation
         // TODO: Add the function for submitting an URL instead of using already existing ones. 
         public async Task getResult(string input)
         {
-            string apiKey = ConfigurationManager.AppSettings["URLScan.io"]; ;
-            string responseUnparsed = string.Empty;
-
-            using (var httpClient = new HttpClient())
+            try
             {
-                using (var request = new HttpRequestMessage(new HttpMethod("POST"), "https://urlscan.io/api/v1/scan/"))
+                //URLScan.IO works as following:
+                // 1. We perform a scan to the url to see if it has already been scanned
+                
+                string uuid = string.Empty;
+                string verdict = string.Empty;
+
+
+                string responseUnparsed = string.Empty;
+
+                using (var httpClient = new HttpClient())
                 {
-                    request.Headers.TryAddWithoutValidation("API-Key", apiKey);
+                    using (var request = new HttpRequestMessage(new HttpMethod("GET"), "https://urlscan.io/api/v1/search/?q=domain:" + parseURL(input)))
+                    {
+                        var response = await httpClient.SendAsync(request);
 
-                    request.Content = new StringContent("{\"url\": \"www.google.com\", \"visibility\": \"public\"}");
-                    request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            responseUnparsed = response.Content.ReadAsStringAsync().Result;
+                        }
+                        else
+                        {
+                            Logger.Warn("Status code from URLScan.IO Search query is: " + response.StatusCode);
+                            return;
+                        }
 
-                    var response = await httpClient.SendAsync(request);
+                        try
+                        {
+                            if (!string.IsNullOrEmpty(responseUnparsed))
+                            {
+                                time = Convert.ToDateTime(Regex.Match(responseUnparsed, @"time"": """ + "(.+?)\",").Groups[1].Value);
+                                uuid = Regex.Match(responseUnparsed, @"uuid"": """ + "(.+?)\",").Groups[1].Value;
+                            }
+                            else
+                            {
+
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Error($"Error parsing information from URLScan.IO Search Query: {ex.StackTrace} - {ex.Message}");
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(uuid))
+                    {
+
+                        using (var request = new HttpRequestMessage(new HttpMethod("GET"), $"https://urlscan.io/api/v1/result/{uuid}/"))
+                        {
+
+                            var response = await httpClient.SendAsync(request);
+
+                            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                            {
+                                responseUnparsed = response.Content.ReadAsStringAsync().Result;
+                            }
+                            else
+                            {
+                                Logger.Warn("Status code from URLScan.IO RESULT query is: " + response.StatusCode);
+                                return;
+                            }
+
+                            try
+                            {
+                                if (!string.IsNullOrEmpty(responseUnparsed))
+                                {
+                                    //This part is a bit tricky. As we are not able to parse the JSON, we will jast extract the following
+                                    //part from the response:
+                                    //"verdicts": {
+                                    //"overall": {
+                                    //    "score": 100,
+                                    //"categories": [
+                                    //  "phishing"
+                                    //                                ],
+                                    //"brands": [
+                                    //  "microsoft"
+                                    //                                ],
+                                    //"tags": [
+                                    //  "phishing"
+                                    //                                ],
+                                    //"malicious": true,
+                                    //"hasVerdicts": 
+
+                                    int index = responseUnparsed.IndexOf("verdicts");
+                                    if (index > 0) {
+                                        string parsed = responseUnparsed.Substring(index);
+                                        score = Convert.ToInt32(Regex.Match(responseUnparsed, @"score"": " + "(.+?),").Groups[1].Value);
+
+                                        string hostnamesUnparsed = Regex.Match(parsed, @"categories"":" + @"(.+?)\]").Groups[1].Value;
+                                       
+
+
+                                    }
+
+                                }
+                                else
+                                {
+
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Logger.Error($"Error parsing information from URLScan.IO Result query: {ex.StackTrace} - {ex.Message}");
+                            }
+                        }
+
+
+                    }
                 }
+            }
+            catch (Exception ex) {
+                Logger.Error($"Error getting URLScan.IO Info: {ex.StackTrace} - {ex.Message}");
+            }
+        }
+
+
+        private string parseURL(string input)
+        {
+            //URLScan.io presents several problems with their APIs. If you want to send an URL, it can't have http or https
+            // Also, it only can parse the domain name, not differents paths. For example: www.google.com its valid, but not www.google.com/api/
+            try
+            {
+                string inputParsed = string.Empty;
+
+                Uri myUri = new Uri(input);
+                string host = myUri.Host; 
+
+                return host;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error parsing URL for ScanURL.io: " + ex.StackTrace + " - " + ex.StackTrace);
+                return string.Empty;
             }
         }
 
