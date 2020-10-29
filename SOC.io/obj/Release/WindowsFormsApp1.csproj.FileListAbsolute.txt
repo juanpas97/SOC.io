@@ -1,0 +1,10 @@
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\bin\Release\WindowsFormsApp1.exe.config
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\bin\Release\WindowsFormsApp1.exe
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\bin\Release\WindowsFormsApp1.pdb
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\obj\Release\WindowsFormsApp1.MainMenu.resources
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\obj\Release\WindowsFormsApp1.Properties.Resources.resources
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\obj\Release\WindowsFormsApp1.csproj.GenerateResource.cache
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\obj\Release\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\obj\Release\WindowsFormsApp1.exe
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\obj\Release\WindowsFormsApp1.pdb
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\obj\Release\WindowsFormsApp1.csprojAssemblyReference.cache

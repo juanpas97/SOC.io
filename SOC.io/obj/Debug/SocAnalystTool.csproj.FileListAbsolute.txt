@@ -1,0 +1,15 @@
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\obj\Debug\SocAnalystTool.csproj.GenerateResource.cache
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\obj\Debug\SocAnalystTool.csproj.CoreCompileInputs.cache
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\obj\Debug\SocAnalystTool.csprojAssemblyReference.cache
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\bin\Debug\Newtonsoft.Json.dll
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\bin\Debug\Newtonsoft.Json.xml
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\obj\Debug\SocAnalystTool.csproj.CopyComplete
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\bin\Debug\log4net.dll
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\bin\Debug\log4net.xml
+F:\Dev\Proyectos\PruebaWinForms\WindowsFormsApp1\obj\Debug\SOCio.MainMenu.resources
