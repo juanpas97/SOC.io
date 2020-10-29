@@ -20,7 +20,7 @@ namespace SOCio.URL_Reputation
             log4net.Config.XmlConfigurator.Configure();
         }
 
-
+        // TODO: Add the function for submitting an URL instead of using already existing ones. 
         public async Task getResult(string input)
         {
             string apiKey = ConfigurationManager.AppSettings["URLScan.io"]; ;
