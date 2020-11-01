@@ -19,7 +19,7 @@ namespace SOCio.URL_Reputation
 
         public int score = int.MinValue;
 
-        public string[] categories;
+        public List<string> categories;
 
         DateTime time;
 
@@ -76,6 +76,8 @@ namespace SOCio.URL_Reputation
                         }
                     }
 
+                    //An example of malicious URL for URLScan.io is sis-research.com or www.halifax.pending-auth.com
+                    // This is useful when debugging
                     if (!string.IsNullOrEmpty(uuid))
                     {
 
@@ -117,18 +119,17 @@ namespace SOCio.URL_Reputation
 
                                     int index = responseUnparsed.IndexOf("verdicts");
                                     if (index > 0) {
-                                        string parsed = responseUnparsed.Substring(index);
-                                        score = Convert.ToInt32(Regex.Match(responseUnparsed, @"score"": " + "(.+?),").Groups[1].Value);
+                                        string parsed = responseUnparsed.Substring(index).Replace("\n", "").Replace("\r", ""); ;
+                                        this.score = Convert.ToInt32(Regex.Match(responseUnparsed, @"score"": " + "(.+?),").Groups[1].Value);
 
-                                        string hostnamesUnparsed = Regex.Match(parsed, @"categories"":" + @"(.+?)\]").Groups[1].Value;
-                                       
-
-
+                                        string categoriesUnparsed = Regex.Match(parsed, @"tags\"":" + "(.+?),").Groups[1].Value;
+                                        this.categories = categoriesUnparsed.Replace("[","").Replace("]","").Replace("\"","").Replace(" ","").Split(new char[] { ',' }).ToList();
                                     }
 
                                 }
                                 else
                                 {
+                                    Logger.Error($"Error getting result from URLScan.IO");
 
                                 }
                             }
@@ -163,8 +164,19 @@ namespace SOCio.URL_Reputation
             }
             catch (Exception ex)
             {
+                //If this fails, we will parse everything manually instead of using the System package
                 Logger.Error("Error parsing URL for ScanURL.io: " + ex.StackTrace + " - " + ex.StackTrace);
-                return string.Empty;
+
+                input = input.Replace("https://","").Replace("http://","");
+
+                if (input.Contains("/")) {
+                    int index = input.IndexOf('/');
+
+                    input = input.Substring(0,index);
+
+                }
+
+                return input;
             }
         }
 

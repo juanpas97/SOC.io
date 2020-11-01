@@ -96,7 +96,7 @@ namespace SOCio.URL_Reputation
 
         }
 
-        private bool checkHostname(string input)
+        private bool checkHttp(string input)
         {
             //HTTP and HTTPs is accepted
             Uri uriResult;
@@ -106,10 +106,19 @@ namespace SOCio.URL_Reputation
             return result;
         }
 
+        private bool checkURL(string input) {
+
+            bool isUri = Uri.IsWellFormedUriString(input, UriKind.RelativeOrAbsolute);
+            return isUri;
+        }
+
         private void PerformScans() {
 
             string input = form.urlReputationTextbox.Text;
-            if (!checkIP(input) && !checkHostname(input))
+
+            Logger.Debug("The user's input is: " + input);
+
+            if (!checkIP(input) && !checkHttp(input) && !checkURL(input))
             {
                 MessageBox.Show("Insert a valid IP or hostname");
                 return;
@@ -122,21 +131,20 @@ namespace SOCio.URL_Reputation
 
             try
             {
-                if (checkHostname(input))
+                if (checkURL(input))
                 {
                     Logger.Debug("Ther user wrote a hostname: " + input);
                     //IPHostEntry hostEntry;
                     //hostEntry = Dns.GetHostEntry(input);
 
-                    Uri myUri = new Uri(input);
-                    var ip = Dns.GetHostAddresses(myUri.Host)[0];
+                    System.Net.IPAddress[] addresses = System.Net.Dns.GetHostAddresses(input);
 
                     //After a DNS resolution, we can get more than 1 result. We will always us the first one. 
                     //If the user wants another IP, it can be written directly on the form.
 
-                    //Task.Factory.StartNew(() => abuseIPDB.getResult(Convert.ToString(hostEntry.AddressList[0])));
-                    //Task.Factory.StartNew(() => maltiverse.getResult("hostname", input));
-                    Task.Factory.StartNew(() => urlscanio.getResult(input));
+                    //Task.Factory.StartNew(() => abuseIPDB.getResult(Convert.ToString(addresses[0])));
+                    Task.Factory.StartNew(() => maltiverse.getResult("hostname", input));
+                    //Task.Factory.StartNew(() => urlscanio.getResult(input));
                 }
                 else
                 {

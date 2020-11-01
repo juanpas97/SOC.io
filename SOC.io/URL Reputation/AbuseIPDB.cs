@@ -85,7 +85,7 @@ namespace SOCio.URLReputation
                             this.domain = Regex.Match(responseUnparsed, @"domain"":""" + "(.+?)\"").Groups[1].Value;
                             this.totalReports = Convert.ToInt32(Regex.Match(responseUnparsed, @"totalReports"":" + "(.+?),").Groups[1].Value);
                             string hostnamesUnparsed = Regex.Match(responseUnparsed, @"hostnames"":\[" + @"(.+?)""\]").Groups[1].Value;
-                            hostnames = hostnamesUnparsed.Replace("\"","").Split(',').ToList();
+                            this.hostnames = hostnamesUnparsed.Replace("\"","").Split(',').ToList();
                         }
                         else {
                             return;

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SOCio.URL_Reputation
@@ -12,6 +13,8 @@ namespace SOCio.URL_Reputation
     public class Maltiverse
     {
         public ILog Logger { get; set; }
+
+        string classification = string.Empty;
 
 
         public Maltiverse() {
@@ -36,6 +39,19 @@ namespace SOCio.URL_Reputation
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         responseUnparsed = response.Content.ReadAsStringAsync().Result;
+
+                        // Maltiverse can return the following categories: [ malicious, suspicious, neutral, whitelisted ]
+                        //Source: https://app.swaggerhub.com/apis-docs/maltiverse/api/1.0.0-oas3#/IPv4/getIP
+                        try
+                        {
+                            this.classification = Regex.Match(responseUnparsed, @"classification"": """ + "(.+?)\",").Groups[1].Value;
+                        }
+                        catch (Exception ex) {
+
+                            Logger.Error($"Error parsing response from Maltiverse: {ex.StackTrace} - {ex.Message}");
+
+                        }
+
                     }
                     else
                     {
