@@ -34,8 +34,6 @@
             this.urlReputation = new System.Windows.Forms.Button();
             this.Logo = new System.Windows.Forms.Panel();
             this.urlReputationPanel = new System.Windows.Forms.Panel();
-            this.barChartGraph = new System.Windows.Forms.Integration.ElementHost();
-            this.cartesianChart1 = new LiveCharts.Wpf.CartesianChart();
             this.countryNameResponse = new System.Windows.Forms.Label();
             this.ispResponselabel = new System.Windows.Forms.Label();
             this.hostnameLabelResponse = new System.Windows.Forms.Label();
@@ -50,6 +48,10 @@
             this.abuseIPDBgraph = new LiveCharts.WinForms.SolidGauge();
             this.urlReputationSearch = new System.Windows.Forms.Button();
             this.urlReputationTextbox = new System.Windows.Forms.TextBox();
+            this.maltiverseGraph = new LiveCharts.WinForms.SolidGauge();
+            this.urlScanGraph = new LiveCharts.WinForms.SolidGauge();
+            this.maltiverseLabel = new System.Windows.Forms.Label();
+            this.urlScanLabel = new System.Windows.Forms.Label();
             this.Index.SuspendLayout();
             this.urlReputationPanel.SuspendLayout();
             this.SuspendLayout();
@@ -123,7 +125,10 @@
             // urlReputationPanel
             // 
             this.urlReputationPanel.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.urlReputationPanel.Controls.Add(this.barChartGraph);
+            this.urlReputationPanel.Controls.Add(this.urlScanLabel);
+            this.urlReputationPanel.Controls.Add(this.maltiverseLabel);
+            this.urlReputationPanel.Controls.Add(this.urlScanGraph);
+            this.urlReputationPanel.Controls.Add(this.maltiverseGraph);
             this.urlReputationPanel.Controls.Add(this.countryNameResponse);
             this.urlReputationPanel.Controls.Add(this.ispResponselabel);
             this.urlReputationPanel.Controls.Add(this.hostnameLabelResponse);
@@ -144,16 +149,6 @@
             this.urlReputationPanel.Size = new System.Drawing.Size(834, 581);
             this.urlReputationPanel.TabIndex = 1;
             this.urlReputationPanel.Visible = false;
-            // 
-            // barChartGraph
-            // 
-            this.barChartGraph.Location = new System.Drawing.Point(61, 330);
-            this.barChartGraph.Name = "barChartGraph";
-            this.barChartGraph.Size = new System.Drawing.Size(256, 169);
-            this.barChartGraph.TabIndex = 17;
-            this.barChartGraph.Text = "barChart";
-            this.barChartGraph.Visible = false;
-            this.barChartGraph.Child = this.cartesianChart1;
             // 
             // countryNameResponse
             // 
@@ -238,7 +233,7 @@
             // 
             // progressBarUrlReputation
             // 
-            this.progressBarUrlReputation.Location = new System.Drawing.Point(347, 313);
+            this.progressBarUrlReputation.Location = new System.Drawing.Point(369, 322);
             this.progressBarUrlReputation.Name = "progressBarUrlReputation";
             this.progressBarUrlReputation.Size = new System.Drawing.Size(100, 23);
             this.progressBarUrlReputation.TabIndex = 7;
@@ -248,7 +243,7 @@
             // 
             this.abuseIPDBlabel.AutoSize = true;
             this.abuseIPDBlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.abuseIPDBlabel.Location = new System.Drawing.Point(126, 274);
+            this.abuseIPDBlabel.Location = new System.Drawing.Point(129, 288);
             this.abuseIPDBlabel.Name = "abuseIPDBlabel";
             this.abuseIPDBlabel.Size = new System.Drawing.Size(136, 29);
             this.abuseIPDBlabel.TabIndex = 6;
@@ -259,7 +254,7 @@
             // 
             this.abuseIPDBgraph.Location = new System.Drawing.Point(65, 148);
             this.abuseIPDBgraph.Name = "abuseIPDBgraph";
-            this.abuseIPDBgraph.Size = new System.Drawing.Size(252, 123);
+            this.abuseIPDBgraph.Size = new System.Drawing.Size(259, 126);
             this.abuseIPDBgraph.TabIndex = 5;
             this.abuseIPDBgraph.Text = "AbuseIPDB";
             this.abuseIPDBgraph.Visible = false;
@@ -281,6 +276,46 @@
             this.urlReputationTextbox.Name = "urlReputationTextbox";
             this.urlReputationTextbox.Size = new System.Drawing.Size(594, 20);
             this.urlReputationTextbox.TabIndex = 3;
+            // 
+            // maltiverseGraph
+            // 
+            this.maltiverseGraph.Location = new System.Drawing.Point(474, 148);
+            this.maltiverseGraph.Name = "maltiverseGraph";
+            this.maltiverseGraph.Size = new System.Drawing.Size(259, 126);
+            this.maltiverseGraph.TabIndex = 17;
+            this.maltiverseGraph.Text = "Maltiverse";
+            this.maltiverseGraph.Visible = false;
+            // 
+            // urlScanGraph
+            // 
+            this.urlScanGraph.Location = new System.Drawing.Point(78, 374);
+            this.urlScanGraph.Name = "urlScanGraph";
+            this.urlScanGraph.Size = new System.Drawing.Size(259, 126);
+            this.urlScanGraph.TabIndex = 18;
+            this.urlScanGraph.Text = "URLScan.io";
+            this.urlScanGraph.Visible = false;
+            // 
+            // maltiverseLabel
+            // 
+            this.maltiverseLabel.AutoSize = true;
+            this.maltiverseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.maltiverseLabel.Location = new System.Drawing.Point(541, 288);
+            this.maltiverseLabel.Name = "maltiverseLabel";
+            this.maltiverseLabel.Size = new System.Drawing.Size(123, 29);
+            this.maltiverseLabel.TabIndex = 19;
+            this.maltiverseLabel.Text = "Maltiverse";
+            this.maltiverseLabel.Visible = false;
+            // 
+            // urlScanLabel
+            // 
+            this.urlScanLabel.AutoSize = true;
+            this.urlScanLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.urlScanLabel.Location = new System.Drawing.Point(129, 503);
+            this.urlScanLabel.Name = "urlScanLabel";
+            this.urlScanLabel.Size = new System.Drawing.Size(145, 29);
+            this.urlScanLabel.TabIndex = 20;
+            this.urlScanLabel.Text = "URLScan.IO";
+            this.urlScanLabel.Visible = false;
             // 
             // MainMenu
             // 
@@ -324,8 +359,10 @@
         public System.Windows.Forms.Label countryNameLabel;
         public System.Windows.Forms.Label hostnameLabel;
         public System.Windows.Forms.Label ipLabel;
-        public System.Windows.Forms.Integration.ElementHost barChartGraph;
-        public LiveCharts.Wpf.CartesianChart cartesianChart1;
+        public System.Windows.Forms.Label urlScanLabel;
+        public System.Windows.Forms.Label maltiverseLabel;
+        public LiveCharts.WinForms.SolidGauge urlScanGraph;
+        public LiveCharts.WinForms.SolidGauge maltiverseGraph;
     }
 }
 

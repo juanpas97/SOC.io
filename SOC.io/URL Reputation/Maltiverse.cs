@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -14,7 +15,8 @@ namespace SOCio.URL_Reputation
     {
         public ILog Logger { get; set; }
 
-        string classification = string.Empty;
+        public string classification = string.Empty;
+        public int parsedResult = int.MinValue;
 
 
         public Maltiverse() {
@@ -45,6 +47,7 @@ namespace SOCio.URL_Reputation
                         try
                         {
                             this.classification = Regex.Match(responseUnparsed, @"classification"": """ + "(.+?)\",").Groups[1].Value;
+                            this.parsedResult = parseResult();
                         }
                         catch (Exception ex) {
 
@@ -61,6 +64,27 @@ namespace SOCio.URL_Reputation
 
                 }
             }
+        }
+
+
+        //This function will parse the result of maltiverse. As this API doesn't return an integer 
+        // as the classification measure, we will translate the results into integers using our own
+        // criteria.
+
+        public int parseResult() {
+            switch (classification) {
+                case "malicious":
+                    return 100;
+                case "suspicious":
+                    return 60;
+                case "neutral":
+                    return 20;
+                case "whitelisted":
+                    return 0;
+                default:
+                    return 0;
+            }
+        
         }
     }
 }

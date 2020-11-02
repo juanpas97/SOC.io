@@ -181,5 +181,15 @@ namespace SOCio.URL_Reputation
         }
 
 
+        public int parseResult()
+        {
+            if (score == int.MinValue)
+            {
+                return 0;
+            }
+            else {
+                return score;
+            }
+        }
     }
 }

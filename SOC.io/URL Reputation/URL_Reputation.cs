@@ -1,4 +1,6 @@
-﻿using log4net;
+﻿using LiveCharts;
+using LiveCharts.Wpf;
+using log4net;
 using SOCio.URLReputation;
 using System;
 using System.Collections.Generic;
@@ -189,7 +191,7 @@ namespace SOCio.URL_Reputation
             form.hostnameLabel.Visible = true;
 
             if (!string.IsNullOrEmpty(abuseIPDB.countryName))
-            {
+            {  
                 form.countryNameResponse.Text = abuseIPDB.countryName + ", " + abuseIPDB.countryCode;
             }
             if (!string.IsNullOrEmpty(abuseIPDB.isp))
@@ -206,6 +208,8 @@ namespace SOCio.URL_Reputation
             }
 
             createGraphAbuseIPDB();
+
+            createGraphMaltiverse();
 
         }
 
@@ -247,6 +251,49 @@ namespace SOCio.URL_Reputation
 
         #endregion
 
+        #region Maltiverse
+
+        private void createGraphMaltiverse()
+        {
+            try
+            {
+                form.maltiverseGraph.Visible = true;
+                form.maltiverseGraph.Visible = true;
+
+
+                form.maltiverseGraph.From = 0;
+                form.maltiverseGraph.To = 100;
+                if (maltiverse.parsedResult != 0)
+                {
+                    if (maltiverse.parsedResult > 0 && maltiverse.parsedResult <= 20)
+                    {
+                        form.maltiverseGraph.ToColor = Colors.LimeGreen;
+                    }
+                    else if (maltiverse.parsedResult > 20 && maltiverse.parsedResult <= 60)
+                    {
+                        form.maltiverseGraph.ToColor = Colors.Yellow;
+                    }
+                    else
+                    {
+                        form.maltiverseGraph.ToColor = Colors.Red;
+                    }
+
+                    form.maltiverseGraph.Value = maltiverse.parsedResult;
+                }
+                else
+                {
+                    form.maltiverseGraph.Value = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Error creating Maltiverse Graph: {ex.StackTrace} - {ex.Message}");
+            }
+
+        }
+
+        #endregion
+
 
 
         private void exportResultsButton_Click(object sender, EventArgs e)
@@ -262,3 +309,6 @@ namespace SOCio.URL_Reputation
     }
 
 }
+
+
+ 
