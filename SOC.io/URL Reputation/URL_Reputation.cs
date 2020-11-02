@@ -116,11 +116,13 @@ namespace SOCio.URL_Reputation
 
         private void PerformScans() {
 
+            clearPanel();
+
             string input = form.urlReputationTextbox.Text;
 
             Logger.Debug("The user's input is: " + input);
 
-            if (!checkIP(input) && !checkHttp(input) && !checkURL(input))
+            if ((!checkIP(input) && !checkHttp(input) && !checkURL(input)) || string.IsNullOrEmpty(form.urlReputation.Text))
             {
                 MessageBox.Show("Insert a valid IP or hostname");
                 return;
@@ -144,14 +146,14 @@ namespace SOCio.URL_Reputation
                     //After a DNS resolution, we can get more than 1 result. We will always us the first one. 
                     //If the user wants another IP, it can be written directly on the form.
 
-                    //Task.Factory.StartNew(() => abuseIPDB.getResult(Convert.ToString(addresses[0])));
+                    Task.Factory.StartNew(() => abuseIPDB.getResult(Convert.ToString(addresses[0])));
                     Task.Factory.StartNew(() => maltiverse.getResult("hostname", input));
-                    //Task.Factory.StartNew(() => urlscanio.getResult(input));
+                    Task.Factory.StartNew(() => urlscanio.getResult(input));
                 }
                 else
                 {
                     Logger.Debug("Ther user wrote an IP: " + input);
-                    //Task.Factory.StartNew(() => abuseIPDB.getResult(input));
+                    Task.Factory.StartNew(() => abuseIPDB.getResult(input));
                     Task.Factory.StartNew(() => maltiverse.getResult("ip", input));
                 }
             }
@@ -162,14 +164,11 @@ namespace SOCio.URL_Reputation
 
 
             //Loading progress bar to wait for results
-            if (abuseIPDB.abuseConfidenceScore == int.MinValue)
+            while (abuseIPDB.abuseConfidenceScore == int.MinValue || maltiverse.parsedResult == int.MinValue || urlscanio.score == int.MinValue )
             {
                 form.progressBarUrlReputation.Visible = true;
 
-                while (abuseIPDB.abuseConfidenceScore == int.MinValue)
-                {
-                    form.progressBarUrlReputation.Value = 25;
-                }
+                 form.progressBarUrlReputation.Value = 25;
             }
 
             form.progressBarUrlReputation.Visible = false;
@@ -210,6 +209,8 @@ namespace SOCio.URL_Reputation
             createGraphAbuseIPDB();
 
             createGraphMaltiverse();
+
+            createGraphURLScanIO();
 
         }
 
@@ -258,7 +259,7 @@ namespace SOCio.URL_Reputation
             try
             {
                 form.maltiverseGraph.Visible = true;
-                form.maltiverseGraph.Visible = true;
+                form.maltiverseLabel.Visible = true;
 
 
                 form.maltiverseGraph.From = 0;
@@ -293,6 +294,72 @@ namespace SOCio.URL_Reputation
         }
 
         #endregion
+
+        #region URLScan.IO
+
+        private void createGraphURLScanIO() {
+            try
+            {
+                form.urlScanGraph.Visible = true;
+                form.urlScanLabel.Visible = true;
+
+
+                form.urlScanGraph.From = 0;
+                form.urlScanGraph.To = 100;
+                if (urlscanio.score != 0)
+                {
+                    if (urlscanio.score > 0 && urlscanio.score <= 20)
+                    {
+                        form.urlScanGraph.ToColor = Colors.LimeGreen;
+                    }
+                    else if (urlscanio.score > 20 && urlscanio.score <= 60)
+                    {
+                        form.urlScanGraph.ToColor = Colors.Yellow;
+                    }
+                    else
+                    {
+                        form.urlScanGraph.ToColor = Colors.Red;
+                    }
+
+                    form.urlScanGraph.Value = urlscanio.score;
+                }
+                else
+                {
+                    form.urlScanGraph.Value = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Error creating URLScan.IO Graph: {ex.StackTrace} - {ex.Message}");
+            }
+
+        }
+
+        #endregion
+
+
+        private void clearPanel() {
+
+            form.maltiverseGraph.Visible = false;
+            form.maltiverseLabel.Visible = false;
+
+            form.urlScanLabel.Visible = false;
+            form.urlScanGraph.Visible = false;
+
+            form.abuseIPDBgraph.Visible = false;
+            form.abuseIPDBlabel.Visible = false;
+
+            form.countryNameLabel.Visible = false;
+            form.ispLabel.Visible = false;
+            form.ipLabel.Visible = false;
+            form.hostnameLabel.Visible = false;
+
+            form.ipLabelResponse.Visible = false;
+            form.hostnameLabelResponse.Visible = false;
+            form.ispResponselabel.Visible = false;
+            form.countryNameResponse.Visible = false;
+
+        }
 
 
 

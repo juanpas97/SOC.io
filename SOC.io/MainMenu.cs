@@ -39,6 +39,7 @@ namespace SOCio
             log4net.Config.XmlConfigurator.Configure();
 
             this.Logger.Info("Starting program...");
+            
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
 

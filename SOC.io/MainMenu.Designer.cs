@@ -327,8 +327,8 @@
             this.Controls.Add(this.urlReputationPanel);
             this.Controls.Add(this.Index);
             this.Name = "MainMenu";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
+            this.ShowIcon = true;
+            this.ShowInTaskbar = true;
             this.Text = "SOC.io";
             this.Index.ResumeLayout(false);
             this.urlReputationPanel.ResumeLayout(false);
