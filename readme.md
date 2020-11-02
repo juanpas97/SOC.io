@@ -22,10 +22,14 @@ This section is divided into new functionalities and/or bug fixed for the differ
     - [New functionality] Add the option to add the ApiKeys through here
 - Misc
     - Integrate with Travis-CI (https://travis-ci.org/)
+     [Update] Probably we will use appveyor.com because of the problems that CI Travis has with .NET Framework.
     - Integrate with SonarCloud (https://sonarcloud.io/)
+    [Update] We will have to reevalute this requirement
     
 ## Compilation
 
 The project has been built using Microsoft Visual Studio 2019 Community Edition (https://visualstudio.microsoft.com/es/vs/community/)
+
+
 
 

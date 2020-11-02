@@ -1,7 +1,0 @@
-language: csharp
-solution: "./SOC.io/SOCio.sln"
-
-dotnet: 4.7.2
-script:
-  - msbuild /t:Restore
-  - msbuild /p:Configuration=Release
