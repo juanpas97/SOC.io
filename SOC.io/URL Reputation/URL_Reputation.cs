@@ -192,18 +192,22 @@ namespace SOCio.URL_Reputation
             if (!string.IsNullOrEmpty(abuseIPDB.countryName))
             {  
                 form.countryNameResponse.Text = abuseIPDB.countryName + ", " + abuseIPDB.countryCode;
+                form.countryNameResponse.Visible = true;
             }
             if (!string.IsNullOrEmpty(abuseIPDB.isp))
             {
                 form.ispResponselabel.Text = abuseIPDB.isp;
+                form.ispResponselabel.Visible = true;
             }
             if (!string.IsNullOrEmpty(abuseIPDB.hostnames[0]))
             {
                 form.hostnameLabelResponse.Text = abuseIPDB.hostnames[0];
+                form.hostnameLabelResponse.Visible = true;
             }
             if (!string.IsNullOrEmpty(abuseIPDB.ipAddress))
             {
                 form.ipLabelResponse.Text = abuseIPDB.ipAddress;
+                form.ipLabelResponse.Visible = true;
             }
 
             createGraphAbuseIPDB();

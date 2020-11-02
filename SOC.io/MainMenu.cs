@@ -72,7 +72,6 @@ namespace SOCio
             urlReputationPanel.Visible = false;
         }
 
-
     }
 }
 
