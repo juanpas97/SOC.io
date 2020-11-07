@@ -52,8 +52,17 @@
             this.abuseIPDBgraph = new LiveCharts.WinForms.SolidGauge();
             this.urlReputationSearch = new System.Windows.Forms.Button();
             this.urlReputationTextbox = new System.Windows.Forms.TextBox();
+            this.analyzeFilePanel = new System.Windows.Forms.Panel();
+            this.sha512Text = new System.Windows.Forms.TextBox();
+            this.sha256Text = new System.Windows.Forms.TextBox();
+            this.md5Text = new System.Windows.Forms.TextBox();
+            this.sha512Label = new System.Windows.Forms.Label();
+            this.sha256Label = new System.Windows.Forms.Label();
+            this.md5Label = new System.Windows.Forms.Label();
+            this.uploadFileButton = new System.Windows.Forms.Button();
             this.Index.SuspendLayout();
             this.urlReputationPanel.SuspendLayout();
+            this.analyzeFilePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // Index
@@ -321,6 +330,94 @@
             this.urlReputationTextbox.Size = new System.Drawing.Size(594, 20);
             this.urlReputationTextbox.TabIndex = 3;
             // 
+            // analyzeFilePanel
+            // 
+            this.analyzeFilePanel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.analyzeFilePanel.Controls.Add(this.sha512Text);
+            this.analyzeFilePanel.Controls.Add(this.sha256Text);
+            this.analyzeFilePanel.Controls.Add(this.md5Text);
+            this.analyzeFilePanel.Controls.Add(this.sha512Label);
+            this.analyzeFilePanel.Controls.Add(this.sha256Label);
+            this.analyzeFilePanel.Controls.Add(this.md5Label);
+            this.analyzeFilePanel.Controls.Add(this.uploadFileButton);
+            this.analyzeFilePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.analyzeFilePanel.Location = new System.Drawing.Point(200, 0);
+            this.analyzeFilePanel.Name = "analyzeFilePanel";
+            this.analyzeFilePanel.Size = new System.Drawing.Size(834, 581);
+            this.analyzeFilePanel.TabIndex = 21;
+            this.analyzeFilePanel.Visible = false;
+            // 
+            // sha512Text
+            // 
+            this.sha512Text.Location = new System.Drawing.Point(103, 106);
+            this.sha512Text.Name = "sha512Text";
+            this.sha512Text.ReadOnly = true;
+            this.sha512Text.Size = new System.Drawing.Size(694, 20);
+            this.sha512Text.TabIndex = 7;
+            this.sha512Text.Visible = false;
+            // 
+            // sha256Text
+            // 
+            this.sha256Text.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.sha256Text.Location = new System.Drawing.Point(103, 78);
+            this.sha256Text.Name = "sha256Text";
+            this.sha256Text.ReadOnly = true;
+            this.sha256Text.Size = new System.Drawing.Size(694, 20);
+            this.sha256Text.TabIndex = 6;
+            this.sha256Text.Visible = false;
+            // 
+            // md5Text
+            // 
+            this.md5Text.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.md5Text.Location = new System.Drawing.Point(103, 51);
+            this.md5Text.Name = "md5Text";
+            this.md5Text.ReadOnly = true;
+            this.md5Text.Size = new System.Drawing.Size(694, 20);
+            this.md5Text.TabIndex = 5;
+            this.md5Text.Visible = false;
+            // 
+            // sha512Label
+            // 
+            this.sha512Label.AutoSize = true;
+            this.sha512Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sha512Label.Location = new System.Drawing.Point(26, 107);
+            this.sha512Label.Name = "sha512Label";
+            this.sha512Label.Size = new System.Drawing.Size(72, 16);
+            this.sha512Label.TabIndex = 4;
+            this.sha512Label.Text = "SHA-512:";
+            this.sha512Label.Visible = false;
+            // 
+            // sha256Label
+            // 
+            this.sha256Label.AutoSize = true;
+            this.sha256Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sha256Label.Location = new System.Drawing.Point(26, 80);
+            this.sha256Label.Name = "sha256Label";
+            this.sha256Label.Size = new System.Drawing.Size(72, 16);
+            this.sha256Label.TabIndex = 3;
+            this.sha256Label.Text = "SHA-256:";
+            this.sha256Label.Visible = false;
+            // 
+            // md5Label
+            // 
+            this.md5Label.AutoSize = true;
+            this.md5Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.md5Label.Location = new System.Drawing.Point(49, 52);
+            this.md5Label.Name = "md5Label";
+            this.md5Label.Size = new System.Drawing.Size(48, 16);
+            this.md5Label.TabIndex = 2;
+            this.md5Label.Text = "MD-5:";
+            this.md5Label.Visible = false;
+            // 
+            // uploadFileButton
+            // 
+            this.uploadFileButton.Location = new System.Drawing.Point(26, 20);
+            this.uploadFileButton.Name = "uploadFileButton";
+            this.uploadFileButton.Size = new System.Drawing.Size(75, 23);
+            this.uploadFileButton.TabIndex = 1;
+            this.uploadFileButton.Text = "Upload File";
+            this.uploadFileButton.UseVisualStyleBackColor = true;
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -328,6 +425,7 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1034, 581);
+            this.Controls.Add(this.analyzeFilePanel);
             this.Controls.Add(this.urlReputationPanel);
             this.Controls.Add(this.Index);
             this.Name = "MainMenu";
@@ -335,6 +433,8 @@
             this.Index.ResumeLayout(false);
             this.urlReputationPanel.ResumeLayout(false);
             this.urlReputationPanel.PerformLayout();
+            this.analyzeFilePanel.ResumeLayout(false);
+            this.analyzeFilePanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -365,6 +465,14 @@
         public System.Windows.Forms.Label maltiverseLabel;
         public LiveCharts.WinForms.SolidGauge urlScanGraph;
         public LiveCharts.WinForms.SolidGauge maltiverseGraph;
+        public System.Windows.Forms.Panel analyzeFilePanel;
+        public System.Windows.Forms.Button uploadFileButton;
+        public System.Windows.Forms.Label sha512Label;
+        public System.Windows.Forms.Label sha256Label;
+        public System.Windows.Forms.Label md5Label;
+        public System.Windows.Forms.TextBox sha512Text;
+        public System.Windows.Forms.TextBox sha256Text;
+        public System.Windows.Forms.TextBox md5Text;
     }
 }
 

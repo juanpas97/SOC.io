@@ -21,10 +21,11 @@ namespace SOCio.URL_Reputation
 {
     public class URLReputationMenu
     {
-        MainMenu form;
+
 
         #region Constants
 
+        MainMenu form;
         public const string urlReputationDefaultText = "IP or hostname";
         public ILog Logger { get; set; }
 
@@ -41,6 +42,7 @@ namespace SOCio.URL_Reputation
         public URLReputationMenu(MainMenu form) {
             this.form = form;
             form.urlReputationPanel.Visible = true;
+            form.urlReputationPanel.BringToFront();
             this.Logger = LogManager.GetLogger(Assembly.GetExecutingAssembly().GetTypes().First());
             log4net.Config.XmlConfigurator.Configure();
 

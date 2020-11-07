@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using SOCio.URL_Reputation;
+using SOCio.Analyze_file;
 
 namespace SOCio
 {
@@ -30,6 +31,7 @@ namespace SOCio
         Color selectedColorPanel = Color.FromArgb(71, 71, 135);
         Color selectedColor = Color.FromArgb(71, 71, 135);
         Color deselectedColor = Color.FromArgb(64, 64, 122);
+
 
         #endregion
 
@@ -60,6 +62,7 @@ namespace SOCio
             hidePanels();
             deselectIndexButtons();
             fileAnalyzer.BackColor = selectedColor;
+            Analyze_File fileAnalyzerPanel = new Analyze_File(this);
         }
 
 
@@ -70,7 +73,9 @@ namespace SOCio
 
         private void hidePanels() {
             urlReputationPanel.Visible = false;
+            analyzeFilePanel.Visible = false;
         }
+
 
     }
 }
