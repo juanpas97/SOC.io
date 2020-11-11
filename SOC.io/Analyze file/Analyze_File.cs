@@ -1,6 +1,7 @@
 ﻿using log4net;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -8,6 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Media;
 
 namespace SOCio.Analyze_file
 {
@@ -22,9 +24,12 @@ namespace SOCio.Analyze_file
 
         #region Variables
 
-        private string md5;
-        private string sha256;
-        private string sha512;
+        private string md5 = string.Empty;
+        private string sha256 = string.Empty;
+        private string sha512 = string.Empty;
+
+        HybridAnalysis hybridAnalysis;
+        Metadefender metadefener;
 
         #endregion
 
@@ -39,11 +44,16 @@ namespace SOCio.Analyze_file
             form.analyzeFilePanel.BringToFront();
 
             form.uploadFileButton.Click += new System.EventHandler(this.UploadFileButton_Click);
+            form.analyzeFileButton.Click += new System.EventHandler(this.analyzeFileButton_Click);
+            form.hybridAnalysisLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.hybridAnalysisLink_LinkClicked);
         }
 
 
         private void UploadFileButton_Click(object sender, EventArgs e)
         {
+
+            clearPanel();
+
             OpenFileDialog uploadFile = new OpenFileDialog();
             uploadFile.InitialDirectory = @"C:\";
             uploadFile.ShowDialog();
@@ -54,12 +64,19 @@ namespace SOCio.Analyze_file
                     this.sha256 = calculateSHA256(uploadFile.FileName);
                     this.sha512 = calculateSHA512(uploadFile.FileName);
 
+                    form.analyzeFileButton.Visible = true;
 
 
                     showResults();
 
                 }
             }
+        }
+
+
+        private void analyzeFileButton_Click(object sender, EventArgs e)
+        {
+            analyzeFile();
         }
 
         private string calculateMD5(string path) {
@@ -134,5 +151,116 @@ namespace SOCio.Analyze_file
 
         }
 
+        private void analyzeFile() {
+
+            hybridAnalysis = new HybridAnalysis();
+            metadefener = new Metadefender();
+            //According to the Hybrid Analysis API, you can pass the hash in your preferred format.
+            //There is no need to check the value as the value is always going to exist.
+
+            //Task.Factory.StartNew(() => hybridAnalysis.getResult(sha256));
+            Task.Factory.StartNew(() => metadefener.getResult(sha256));
+
+            while (!hybridAnalysis.processFinished && !metadefener.processFinished)
+            {
+                //Waiting for the process to finish
+            }
+
+            showDataHybridAnalysis();
+            createGraphHybridAnalysis();
+        }
+
+
+        #region Hybrid Analysis
+
+        private void showDataHybridAnalysis() {
+            try
+            {
+                form.hybridAnalysisLink.Visible = true;
+
+                form.fileInfoLabel.Visible = true;
+
+                if (!string.IsNullOrEmpty(form.fileInfoText.Text)) {
+                    form.fileInfoText.Text = hybridAnalysis.fileInfo;
+                    form.fileInfoText.Visible = true;
+                }
+
+                form.virusFamilyLabel.Visible = true;
+
+                if (!string.IsNullOrEmpty(form.virusFamilyText.Text))
+                {
+                    form.virusFamilyText.Text = hybridAnalysis.virusFamily;
+                    form.virusFamilyText.Visible = true;
+                }
+
+
+            } catch (Exception ex) {
+                Logger.Error($"Error presenting HybridAnalysis Info:{ex.StackTrace} - {ex.Message}");
+            }
+        }
+
+        private void createGraphHybridAnalysis() {
+            try
+            {
+                form.hybridAnalysisLabel.Visible = true;
+                form.hybridAnalysisGraph.Visible = true;
+
+                form.hybridAnalysisGraph.From = 0;
+                form.hybridAnalysisGraph.To = 100;
+
+
+                form.hybridAnalysisGraph.ToColor = chooseColor(hybridAnalysis.score);
+                form.hybridAnalysisGraph.Value = hybridAnalysis.score;
+            }
+            catch (Exception ex) {
+                Logger.Error($"Error creating Hybrid-Analysis Graph:{ex.StackTrace} - {ex.Message}" );
+            }
+        }
+
+
+        private void hybridAnalysisLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.hybrid-analysis.com/search?query=" + md5);
+        }
+
+        #endregion
+
+        private System.Windows.Media.Color chooseColor(int score)
+        {
+            //Ther default color to show will be green. Nevertheless, this value can never be reached
+            System.Windows.Media.Color result;
+
+            if (score > 0 && score <= 20)
+            {
+                result = Colors.LimeGreen;
+            }
+            else if (score > 20 && score <= 60)
+            {
+                result = Colors.Yellow;
+            }
+            else
+            {
+                result = Colors.Red;
+            }
+
+            
+            return result;
+        }
+
+        private void clearPanel() {
+
+            form.analyzeFileButton.Visible = false;
+
+            form.hybridAnalysisGraph.Visible = false;
+            form.hybridAnalysisLabel.Visible = false;
+
+            form.md5Text.Visible = false;
+            form.sha256Text.Visible = false;
+            form.sha512Text.Visible = false;
+
+            form.hybridAnalysisLink.Visible = false;
+
+        }
+         
     }
 }

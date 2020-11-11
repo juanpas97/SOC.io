@@ -14,6 +14,7 @@ using System.Windows.Forms;
 
 using SOCio.URL_Reputation;
 using SOCio.Analyze_file;
+using System.Diagnostics;
 
 namespace SOCio
 {
@@ -76,7 +77,7 @@ namespace SOCio
             analyzeFilePanel.Visible = false;
         }
 
-
+       
     }
 }
 

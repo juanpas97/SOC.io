@@ -87,6 +87,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analyze file\Analyze_File.cs" />
+    <Compile Include="Analyze file\HybridAnalysis.cs" />
+    <Compile Include="Analyze file\Metadefender.cs" />
     <Compile Include="MainMenu.cs">
       <SubType>Form</SubType>
     </Compile>

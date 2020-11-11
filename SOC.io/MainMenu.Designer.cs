@@ -53,6 +53,12 @@
             this.urlReputationSearch = new System.Windows.Forms.Button();
             this.urlReputationTextbox = new System.Windows.Forms.TextBox();
             this.analyzeFilePanel = new System.Windows.Forms.Panel();
+            this.fileInfoText = new System.Windows.Forms.Label();
+            this.fileInfoLabel = new System.Windows.Forms.Label();
+            this.hybridAnalysisLink = new System.Windows.Forms.LinkLabel();
+            this.hybridAnalysisLabel = new System.Windows.Forms.Label();
+            this.hybridAnalysisGraph = new LiveCharts.WinForms.SolidGauge();
+            this.analyzeFileButton = new System.Windows.Forms.Button();
             this.sha512Text = new System.Windows.Forms.TextBox();
             this.sha256Text = new System.Windows.Forms.TextBox();
             this.md5Text = new System.Windows.Forms.TextBox();
@@ -60,6 +66,8 @@
             this.sha256Label = new System.Windows.Forms.Label();
             this.md5Label = new System.Windows.Forms.Label();
             this.uploadFileButton = new System.Windows.Forms.Button();
+            this.virusFamilyText = new System.Windows.Forms.Label();
+            this.virusFamilyLabel = new System.Windows.Forms.Label();
             this.Index.SuspendLayout();
             this.urlReputationPanel.SuspendLayout();
             this.analyzeFilePanel.SuspendLayout();
@@ -153,9 +161,9 @@
             this.urlReputationPanel.Controls.Add(this.urlReputationSearch);
             this.urlReputationPanel.Controls.Add(this.urlReputationTextbox);
             this.urlReputationPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.urlReputationPanel.Location = new System.Drawing.Point(200, 0);
+            this.urlReputationPanel.Location = new System.Drawing.Point(0, 0);
             this.urlReputationPanel.Name = "urlReputationPanel";
-            this.urlReputationPanel.Size = new System.Drawing.Size(834, 581);
+            this.urlReputationPanel.Size = new System.Drawing.Size(1034, 581);
             this.urlReputationPanel.TabIndex = 1;
             this.urlReputationPanel.Visible = false;
             // 
@@ -333,6 +341,14 @@
             // analyzeFilePanel
             // 
             this.analyzeFilePanel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.analyzeFilePanel.Controls.Add(this.virusFamilyText);
+            this.analyzeFilePanel.Controls.Add(this.virusFamilyLabel);
+            this.analyzeFilePanel.Controls.Add(this.fileInfoText);
+            this.analyzeFilePanel.Controls.Add(this.fileInfoLabel);
+            this.analyzeFilePanel.Controls.Add(this.hybridAnalysisLink);
+            this.analyzeFilePanel.Controls.Add(this.hybridAnalysisLabel);
+            this.analyzeFilePanel.Controls.Add(this.hybridAnalysisGraph);
+            this.analyzeFilePanel.Controls.Add(this.analyzeFileButton);
             this.analyzeFilePanel.Controls.Add(this.sha512Text);
             this.analyzeFilePanel.Controls.Add(this.sha256Text);
             this.analyzeFilePanel.Controls.Add(this.md5Text);
@@ -346,6 +362,68 @@
             this.analyzeFilePanel.Size = new System.Drawing.Size(834, 581);
             this.analyzeFilePanel.TabIndex = 21;
             this.analyzeFilePanel.Visible = false;
+            // 
+            // fileInfoText
+            // 
+            this.fileInfoText.AutoSize = true;
+            this.fileInfoText.Location = new System.Drawing.Point(405, 498);
+            this.fileInfoText.Name = "fileInfoText";
+            this.fileInfoText.Size = new System.Drawing.Size(62, 13);
+            this.fileInfoText.TabIndex = 13;
+            this.fileInfoText.Text = "FileInfoText";
+            this.fileInfoText.Visible = false;
+            // 
+            // fileInfoLabel
+            // 
+            this.fileInfoLabel.AutoSize = true;
+            this.fileInfoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fileInfoLabel.Location = new System.Drawing.Point(337, 498);
+            this.fileInfoLabel.Name = "fileInfoLabel";
+            this.fileInfoLabel.Size = new System.Drawing.Size(57, 13);
+            this.fileInfoLabel.TabIndex = 12;
+            this.fileInfoLabel.Text = "File Info:";
+            this.fileInfoLabel.Visible = false;
+            // 
+            // hybridAnalysisLink
+            // 
+            this.hybridAnalysisLink.AutoSize = true;
+            this.hybridAnalysisLink.Location = new System.Drawing.Point(166, 462);
+            this.hybridAnalysisLink.Name = "hybridAnalysisLink";
+            this.hybridAnalysisLink.Size = new System.Drawing.Size(71, 13);
+            this.hybridAnalysisLink.TabIndex = 11;
+            this.hybridAnalysisLink.TabStop = true;
+            this.hybridAnalysisLink.Text = "Check Online";
+            this.hybridAnalysisLink.Visible = false;
+            // 
+            // hybridAnalysisLabel
+            // 
+            this.hybridAnalysisLabel.AutoSize = true;
+            this.hybridAnalysisLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hybridAnalysisLabel.Location = new System.Drawing.Point(119, 421);
+            this.hybridAnalysisLabel.Name = "hybridAnalysisLabel";
+            this.hybridAnalysisLabel.Size = new System.Drawing.Size(179, 29);
+            this.hybridAnalysisLabel.TabIndex = 10;
+            this.hybridAnalysisLabel.Text = "Hybrid-Analysis";
+            this.hybridAnalysisLabel.Visible = false;
+            // 
+            // hybridAnalysisGraph
+            // 
+            this.hybridAnalysisGraph.Location = new System.Drawing.Point(78, 255);
+            this.hybridAnalysisGraph.Name = "hybridAnalysisGraph";
+            this.hybridAnalysisGraph.Size = new System.Drawing.Size(250, 152);
+            this.hybridAnalysisGraph.TabIndex = 9;
+            this.hybridAnalysisGraph.Text = "solidGauge1";
+            this.hybridAnalysisGraph.Visible = false;
+            // 
+            // analyzeFileButton
+            // 
+            this.analyzeFileButton.Location = new System.Drawing.Point(29, 148);
+            this.analyzeFileButton.Name = "analyzeFileButton";
+            this.analyzeFileButton.Size = new System.Drawing.Size(75, 23);
+            this.analyzeFileButton.TabIndex = 8;
+            this.analyzeFileButton.Text = "Analyze File";
+            this.analyzeFileButton.UseVisualStyleBackColor = true;
+            this.analyzeFileButton.Visible = false;
             // 
             // sha512Text
             // 
@@ -411,12 +489,33 @@
             // 
             // uploadFileButton
             // 
-            this.uploadFileButton.Location = new System.Drawing.Point(26, 20);
+            this.uploadFileButton.Location = new System.Drawing.Point(29, 12);
             this.uploadFileButton.Name = "uploadFileButton";
             this.uploadFileButton.Size = new System.Drawing.Size(75, 23);
             this.uploadFileButton.TabIndex = 1;
-            this.uploadFileButton.Text = "Upload File";
+            this.uploadFileButton.Text = "Load File";
             this.uploadFileButton.UseVisualStyleBackColor = true;
+            // 
+            // virusFamilyText
+            // 
+            this.virusFamilyText.AutoSize = true;
+            this.virusFamilyText.Location = new System.Drawing.Point(405, 528);
+            this.virusFamilyText.Name = "virusFamilyText";
+            this.virusFamilyText.Size = new System.Drawing.Size(62, 13);
+            this.virusFamilyText.TabIndex = 15;
+            this.virusFamilyText.Text = "FileInfoText";
+            this.virusFamilyText.Visible = false;
+            // 
+            // virusFamilyLabel
+            // 
+            this.virusFamilyLabel.AutoSize = true;
+            this.virusFamilyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.virusFamilyLabel.Location = new System.Drawing.Point(323, 528);
+            this.virusFamilyLabel.Name = "virusFamilyLabel";
+            this.virusFamilyLabel.Size = new System.Drawing.Size(75, 13);
+            this.virusFamilyLabel.TabIndex = 14;
+            this.virusFamilyLabel.Text = "Virus family:";
+            this.virusFamilyLabel.Visible = false;
             // 
             // MainMenu
             // 
@@ -426,8 +525,8 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1034, 581);
             this.Controls.Add(this.analyzeFilePanel);
-            this.Controls.Add(this.urlReputationPanel);
             this.Controls.Add(this.Index);
+            this.Controls.Add(this.urlReputationPanel);
             this.Name = "MainMenu";
             this.Text = "SOC.io";
             this.Index.ResumeLayout(false);
@@ -473,6 +572,14 @@
         public System.Windows.Forms.TextBox sha512Text;
         public System.Windows.Forms.TextBox sha256Text;
         public System.Windows.Forms.TextBox md5Text;
+        public System.Windows.Forms.Button analyzeFileButton;
+        public LiveCharts.WinForms.SolidGauge hybridAnalysisGraph;
+        public System.Windows.Forms.Label hybridAnalysisLabel;
+        public System.Windows.Forms.LinkLabel hybridAnalysisLink;
+        public System.Windows.Forms.Label fileInfoText;
+        public System.Windows.Forms.Label fileInfoLabel;
+        public System.Windows.Forms.Label virusFamilyText;
+        public System.Windows.Forms.Label virusFamilyLabel;
     }
 }
 

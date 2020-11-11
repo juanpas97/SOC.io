@@ -233,17 +233,7 @@ namespace SOCio.URL_Reputation
                 form.abuseIPDBgraph.To = 100;
                 if (abuseIPDB.abuseConfidenceScore != 0)
                 {
-                    if (abuseIPDB.abuseConfidenceScore > 0 && abuseIPDB.abuseConfidenceScore <= 20)
-                    {
-                        form.abuseIPDBgraph.ToColor = Colors.LimeGreen;
-                    }
-                    else if (abuseIPDB.abuseConfidenceScore > 20 && abuseIPDB.abuseConfidenceScore <= 60)
-                    {
-                        form.abuseIPDBgraph.ToColor = Colors.Yellow;
-                    }
-                    else {
-                        form.abuseIPDBgraph.ToColor = Colors.Red;
-                    }
+                    form.abuseIPDBgraph.ToColor = choosecolor(abuseIPDB.abuseConfidenceScore);  
                     form.abuseIPDBgraph.Value = abuseIPDB.abuseConfidenceScore;
                 }
                 else {
@@ -272,18 +262,7 @@ namespace SOCio.URL_Reputation
                 form.maltiverseGraph.To = 100;
                 if (maltiverse.parsedResult != 0)
                 {
-                    if (maltiverse.parsedResult > 0 && maltiverse.parsedResult <= 20)
-                    {
-                        form.maltiverseGraph.ToColor = Colors.LimeGreen;
-                    }
-                    else if (maltiverse.parsedResult > 20 && maltiverse.parsedResult <= 60)
-                    {
-                        form.maltiverseGraph.ToColor = Colors.Yellow;
-                    }
-                    else
-                    {
-                        form.maltiverseGraph.ToColor = Colors.Red;
-                    }
+                    form.maltiverseGraph.ToColor = choosecolor(maltiverse.parsedResult);
 
                     form.maltiverseGraph.Value = maltiverse.parsedResult;
                 }
@@ -314,19 +293,8 @@ namespace SOCio.URL_Reputation
                 form.urlScanGraph.To = 100;
                 if (urlscanio.score != 0)
                 {
-                    if (urlscanio.score > 0 && urlscanio.score <= 20)
-                    {
-                        form.urlScanGraph.ToColor = Colors.LimeGreen;
-                    }
-                    else if (urlscanio.score > 20 && urlscanio.score <= 60)
-                    {
-                        form.urlScanGraph.ToColor = Colors.Yellow;
-                    }
-                    else
-                    {
-                        form.urlScanGraph.ToColor = Colors.Red;
-                    }
 
+                    form.urlScanGraph.ToColor = choosecolor(urlscanio.score);
                     form.urlScanGraph.Value = urlscanio.score;
                 }
                 else
@@ -342,6 +310,28 @@ namespace SOCio.URL_Reputation
         }
 
         #endregion
+
+        private System.Windows.Media.Color choosecolor(int score)
+        {
+
+            System.Windows.Media.Color result;
+
+            if (score > 0 && score <= 20)
+            {
+                result = Colors.LimeGreen;
+            }
+            else if (score > 20 && score <= 60)
+            {
+                result = Colors.Yellow;
+            }
+            else
+            {
+                result = Colors.Red;
+            }
+
+            //Ther default color to show will be green. Nevertheless, this value can never be reached
+            return result;
+        }
 
 
         private void clearPanel() {
