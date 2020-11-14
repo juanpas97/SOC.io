@@ -26,13 +26,14 @@ namespace SOCio.Analyze_file
 
         #region Variables
 
-        int totalAV;
-        int detectedAV;
-        string threatName = string.Empty;
+        public int totalAV = int.MinValue;
+        public int detectedAV = int.MinValue;
+        public string threatName = string.Empty;
 
         #endregion
 
         public bool processFinished = false;
+        public bool noResult = false;
 
         public Metadefender()
         {
@@ -49,7 +50,8 @@ namespace SOCio.Analyze_file
 
                 using (var httpClient = new HttpClient())
                 {
-                    using (var request = new HttpRequestMessage(new HttpMethod("GET"), "https://api.metadefender.com/v4/hash/" + "6A5C19D9FFE8804586E8F4C0DFCC66DE"))
+                    //Hash that works: 6A5C19D9FFE8804586E8F4C0DFCC66DE
+                    using (var request = new HttpRequestMessage(new HttpMethod("GET"), "https://api.metadefender.com/v4/hash/" + hash))
                     {
                         request.Headers.TryAddWithoutValidation("apikey", apiKey);
 
@@ -63,6 +65,7 @@ namespace SOCio.Analyze_file
                             else
                             {
                                 Logger.Error($"Status code from Metadefender is: " + response.StatusCode);
+                                this.noResult = true;
                                 this.processFinished = true;
                                 return;
                             }
@@ -73,10 +76,11 @@ namespace SOCio.Analyze_file
                                 {
 
                                     //We first check if the file has been uploaded to Hybrid-Analysis
-                                    if ("[]".Equals(responseUnparsed))
+                                    if (responseUnparsed.Contains("The hash was not found"))
                                     {
-                                        Logger.Info("Hybrid-Analysis doesn't have results for this hash");
+                                        Logger.Info("Metadefender doesn't have results for this hash");
                                         this.processFinished = true;
+                                        this.noResult = true;
                                         return;
                                     }
 
@@ -92,6 +96,7 @@ namespace SOCio.Analyze_file
                                 else
                                 {
                                     this.processFinished = true;
+                                    this.noResult = true;
                                     return;
                                 }
 
@@ -102,6 +107,7 @@ namespace SOCio.Analyze_file
                             catch (Exception ex)
                             {
                                 this.processFinished = true;
+                                this.noResult = true;
                                 Logger.Error($"Error Parsing info from MetaDefender: {ex.StackTrace} - {ex.Message}");
                                 return;
                             }
@@ -112,6 +118,7 @@ namespace SOCio.Analyze_file
             catch (Exception ex)
             {
                 Logger.Error($"Error parsing results from Metadefender: {ex.StackTrace} - {ex.Message}");
+                this.noResult = true;
                 this.processFinished = true;
             }
         }

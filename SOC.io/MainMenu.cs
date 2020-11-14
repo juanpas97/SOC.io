@@ -14,12 +14,15 @@ using System.Windows.Forms;
 
 using SOCio.URL_Reputation;
 using SOCio.Analyze_file;
+using SOCio.Settings;
 using System.Diagnostics;
 
 namespace SOCio
 {
     public partial class MainMenu : Form
     {
+
+     
 
         #region Constants
 
@@ -41,8 +44,7 @@ namespace SOCio
             this.Logger = LogManager.GetLogger(Assembly.GetExecutingAssembly().GetTypes().First());
             log4net.Config.XmlConfigurator.Configure();
 
-            this.Logger.Info("Starting program...");
-            
+            this.Icon = Properties.Resources.icon;
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
@@ -70,14 +72,24 @@ namespace SOCio
         private void deselectIndexButtons() {
             fileAnalyzer.BackColor = deselectedColor;
             urlReputation.BackColor = deselectedColor;
+            settingsIndex.BackColor = deselectedColor;
         }
 
         private void hidePanels() {
             urlReputationPanel.Visible = false;
             analyzeFilePanel.Visible = false;
+            settingsPanel.Visible = false;
+            homePanel.Visible = false;
         }
 
-       
+        private void settings_Click(object sender, EventArgs e)
+        {
+            hidePanels();
+            deselectIndexButtons();
+            settingsIndex.BackColor = selectedColor;
+            SettingsMenu settings = new SettingsMenu(this);
+        }
+
     }
 }
 

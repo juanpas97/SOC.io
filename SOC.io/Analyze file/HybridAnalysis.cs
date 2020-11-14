@@ -34,6 +34,7 @@ namespace SOCio.Analyze_file
         #endregion
 
         public bool processFinished = false;
+        public bool noResult = false;
 
         public HybridAnalysis()
         {
@@ -80,6 +81,7 @@ namespace SOCio.Analyze_file
                                     //We first check if the file has been uploaded to Hybrid-Analysis
                                     if ("[]".Equals(responseUnparsed)) {
                                         Logger.Info("Hybrid-Analysis doesn't have results for this hash");
+                                        this.noResult = true;
                                         this.processFinished = true;
                                         return;
                                     }

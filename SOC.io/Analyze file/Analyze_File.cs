@@ -1,7 +1,9 @@
 ﻿using log4net;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -28,8 +30,8 @@ namespace SOCio.Analyze_file
         private string sha256 = string.Empty;
         private string sha512 = string.Empty;
 
-        HybridAnalysis hybridAnalysis;
-        Metadefender metadefener;
+        public HybridAnalysis hybridAnalysis;
+        public Metadefender metadefender;
 
         #endregion
 
@@ -46,6 +48,8 @@ namespace SOCio.Analyze_file
             form.uploadFileButton.Click += new System.EventHandler(this.UploadFileButton_Click);
             form.analyzeFileButton.Click += new System.EventHandler(this.analyzeFileButton_Click);
             form.hybridAnalysisLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.hybridAnalysisLink_LinkClicked);
+            form.metadefenderLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.metadefenderLink_LinkClicked);
+            form.saveResultAnalyzeButton.Click += new System.EventHandler(this.saveResultAnalyzeButton_Click);
         }
 
 
@@ -149,25 +153,45 @@ namespace SOCio.Analyze_file
             form.sha512Text.Visible = true;
             form.sha512Text.Text = this.sha512;
 
+            form.saveResultAnalyzeButton.Visible = true;
+
         }
 
         private void analyzeFile() {
 
             hybridAnalysis = new HybridAnalysis();
-            metadefener = new Metadefender();
+            metadefender = new Metadefender();
             //According to the Hybrid Analysis API, you can pass the hash in your preferred format.
             //There is no need to check the value as the value is always going to exist.
 
-            //Task.Factory.StartNew(() => hybridAnalysis.getResult(sha256));
-            Task.Factory.StartNew(() => metadefener.getResult(sha256));
+            Task.Factory.StartNew(() => hybridAnalysis.getResult(sha256));
+            Task.Factory.StartNew(() => metadefender.getResult(sha256));
 
-            while (!hybridAnalysis.processFinished && !metadefener.processFinished)
+            do
             {
-                //Waiting for the process to finish
-            }
+                //Waiting for the processes to finish
 
-            showDataHybridAnalysis();
-            createGraphHybridAnalysis();
+            } while (!hybridAnalysis.processFinished || !metadefender.processFinished);
+
+
+            if (!hybridAnalysis.noResult)
+            {
+                showDataHybridAnalysis();
+                createGraphHybridGraph();
+            }
+            else {
+                form.noDataHybridAnalysis.Visible = true;
+                form.hybridAnalysisLink.Visible = true;
+            }
+            if (!metadefender.noResult)
+            {
+                createMetadefenderGraph();
+            }
+            else {
+                form.noDataMetadefenderLabel.Visible = true;
+                form.metadefenderLink.Visible = true;
+
+            }
         }
 
 
@@ -199,7 +223,7 @@ namespace SOCio.Analyze_file
             }
         }
 
-        private void createGraphHybridAnalysis() {
+        private void createGraphHybridGraph() {
             try
             {
                 form.hybridAnalysisLabel.Visible = true;
@@ -225,6 +249,147 @@ namespace SOCio.Analyze_file
 
         #endregion
 
+        #region Metadefender
+
+        private void createMetadefenderGraph() {
+            try
+            {
+
+                form.metadefenderLabel.Visible = true;
+
+                form.metaDefenderGraph.Visible = true;
+
+                form.avDetectedLabel.Visible = true;
+
+                form.metaDefenderGraph.From = 0;
+
+                //The default is 37 because metadefender has 37 antivirus by default
+                if (metadefender.totalAV == int.MinValue)
+                {
+                    form.metaDefenderGraph.To = 37;
+                }
+                else
+                {
+                    form.metaDefenderGraph.To = metadefender.totalAV;
+                }
+
+                form.hybridAnalysisGraph.ToColor = chooseColorMetaDefender(metadefender.totalAV, metadefender.detectedAV);
+
+                form.metaDefenderGraph.Value = metadefender.detectedAV;
+
+                form.metadefenderLink.Visible = true;
+            }
+            catch (Exception ex) {
+                Logger.Error($"Error creating Metadefender graph: {ex.StackTrace} - {ex.Message}");
+            }
+        }
+
+        private void metadefenderLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start($"https://metadefender.opswat.com/results/file/{md5}/hash/multiscan?lang=en");
+        }
+
+        //This color will be different as the color will depend on the total percentage of the AVs.
+        private System.Windows.Media.Color chooseColorMetaDefender(int totalAV, int detectedAV) {
+            try
+            {
+
+                //We get the result 1000-based.
+                int result = Convert.ToInt32((detectedAV / totalAV) * 100);
+
+                System.Windows.Media.Color color;
+
+                if (result > 0 && result <= 20)
+                {
+                    color = Colors.LimeGreen;
+                }
+                else if (result > 20 && result <= 60)
+                {
+                    color = Colors.Yellow;
+                }
+                else
+                {
+                    color = Colors.Red;
+                }
+
+                return color;
+            }
+            catch (Exception ex) {
+                Logger.Error("Error parsing color for MetaDefender: " + ex.StackTrace + " - " + ex.Message);
+                return Colors.LimeGreen;
+            }
+
+        }
+
+
+        #endregion
+
+
+        #region Export Results
+
+        private void saveResultAnalyzeButton_Click(object sender, EventArgs e)
+        {
+            exportResultsFileAnalyzer();
+        }
+
+        private void exportResultsFileAnalyzer() {
+            try
+            {
+                //First we will calculate the name of the file. To do this, we check if the file already exists.
+                //If exists, we will follow the Windows format to add (int).
+                string filePath = string.Empty;
+
+                if (!string.IsNullOrEmpty(md5))
+                {
+                    filePath = ConfigurationManager.AppSettings["SaveLocation"] + md5;
+                }
+                else
+                {
+                     filePath = ConfigurationManager.AppSettings["SaveLocation"] + "AnalyzeFile";
+                }
+
+                var exists = true;
+                int i = 1;
+                while (exists)
+                {
+
+                    var fileExists = File.Exists(filePath + ".png") ? true : false;
+                    if (fileExists)
+                    {
+                        filePath = filePath + $" ({i})";
+                    }
+                    else
+                    {
+                        exists = false;
+                    }
+                }
+
+
+                Bitmap bmp = new Bitmap(form.analyzeFilePanel.Width, form.analyzeFilePanel.Height);
+                form.analyzeFilePanel.DrawToBitmap(bmp, new Rectangle(0, 0, bmp.Width, bmp.Height));
+                using (MemoryStream memory = new MemoryStream())
+                {
+                    //The file will be saved with the name of the MD5.
+                    using (FileStream fs = new FileStream(filePath + ".png", FileMode.Create, FileAccess.ReadWrite))
+                    {
+                        bmp.Save(memory, ImageFormat.Jpeg);
+                        byte[] bytes = memory.ToArray();
+                        fs.Write(bytes, 0, bytes.Length);
+                    }
+                }
+
+                Clipboard.SetImage(bmp);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error exporting results from Analyze File:" + ex.StackTrace + " - " + ex.Message);
+                MessageBox.Show("Error exporting image", "Error", MessageBoxButtons.OK);
+            }
+        }
+
+        #endregion
+
+
         private System.Windows.Media.Color chooseColor(int score)
         {
             //Ther default color to show will be green. Nevertheless, this value can never be reached
@@ -243,7 +408,6 @@ namespace SOCio.Analyze_file
                 result = Colors.Red;
             }
 
-            
             return result;
         }
 

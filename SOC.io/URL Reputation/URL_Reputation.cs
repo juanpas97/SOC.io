@@ -4,9 +4,11 @@ using log4net;
 using SOCio.URLReputation;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -361,16 +363,64 @@ namespace SOCio.URL_Reputation
 
         private void exportResultsButton_Click(object sender, EventArgs e)
         {
-            Bitmap FormScreenShot = new Bitmap(form.Width, form.Height);
-
-            Graphics G = Graphics.FromImage(FormScreenShot);
-
-            G.CopyFromScreen(form.Location, new Point(0, 0), form.Size);
-
-            Clipboard.SetImage(FormScreenShot);
+            exportResultsURLReputation();
         }
-    }
 
+        private void exportResultsURLReputation() {
+                try
+                {
+                    //First we will calculate the name of the file. To do this, we check if the file already exists.
+                    //If exists, we will follow the Windows format to add (int).
+
+                    string filePath = string.Empty;
+
+                    if (!string.IsNullOrEmpty(form.urlReputationTextbox.Text))
+                    {
+                        filePath = ConfigurationManager.AppSettings["SaveLocation"] + form.urlReputationTextbox.Text;
+                    }
+                    else {
+                        filePath = ConfigurationManager.AppSettings["SaveLocation"] + "URL_Reputation";
+                    }
+                    
+                    var exists = true;
+                    int i = 1;
+                    while (exists)
+                    {
+
+                        var fileExists = File.Exists(filePath + ".png") ? true : false;
+                        if (fileExists)
+                        {
+                            filePath = filePath + $" ({i})";
+                        }
+                        else
+                        {
+                            exists = false;
+                        }
+                    }
+
+
+                    Bitmap bmp = new Bitmap(form.analyzeFilePanel.Width, form.analyzeFilePanel.Height);
+                    form.analyzeFilePanel.DrawToBitmap(bmp, new Rectangle(0, 0, bmp.Width, bmp.Height));
+                    using (MemoryStream memory = new MemoryStream())
+                    {
+                        //The file will be saved with the name of the MD5.
+                        using (FileStream fs = new FileStream(filePath + ".png", FileMode.Create, FileAccess.ReadWrite))
+                        {
+                            bmp.Save(memory, ImageFormat.Jpeg);
+                            byte[] bytes = memory.ToArray();
+                            fs.Write(bytes, 0, bytes.Length);
+                        }
+                    }
+
+                    Clipboard.SetImage(bmp);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error("Error exporting results from URL Reputation:" + ex.StackTrace + " - " + ex.Message);
+                    MessageBox.Show("Error exporting image", "Error", MessageBoxButtons.OK);
+                }
+            }
+    }
 }
 
 

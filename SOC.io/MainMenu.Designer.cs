@@ -29,7 +29,8 @@
         private void InitializeComponent()
         {
             this.Index = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
+            this.settingsIndex = new System.Windows.Forms.Button();
+            this.about = new System.Windows.Forms.Button();
             this.fileAnalyzer = new System.Windows.Forms.Button();
             this.urlReputation = new System.Windows.Forms.Button();
             this.Logo = new System.Windows.Forms.Panel();
@@ -53,6 +54,14 @@
             this.urlReputationSearch = new System.Windows.Forms.Button();
             this.urlReputationTextbox = new System.Windows.Forms.TextBox();
             this.analyzeFilePanel = new System.Windows.Forms.Panel();
+            this.homePanel = new System.Windows.Forms.Panel();
+            this.saveResultAnalyzeButton = new System.Windows.Forms.Button();
+            this.avDetectedLabel = new System.Windows.Forms.Label();
+            this.metadefenderLink = new System.Windows.Forms.LinkLabel();
+            this.metadefenderLabel = new System.Windows.Forms.Label();
+            this.metaDefenderGraph = new LiveCharts.WinForms.SolidGauge();
+            this.virusFamilyText = new System.Windows.Forms.Label();
+            this.virusFamilyLabel = new System.Windows.Forms.Label();
             this.fileInfoText = new System.Windows.Forms.Label();
             this.fileInfoLabel = new System.Windows.Forms.Label();
             this.hybridAnalysisLink = new System.Windows.Forms.LinkLabel();
@@ -66,17 +75,33 @@
             this.sha256Label = new System.Windows.Forms.Label();
             this.md5Label = new System.Windows.Forms.Label();
             this.uploadFileButton = new System.Windows.Forms.Button();
-            this.virusFamilyText = new System.Windows.Forms.Label();
-            this.virusFamilyLabel = new System.Windows.Forms.Label();
+            this.noDataHybridAnalysis = new System.Windows.Forms.TextBox();
+            this.noDataMetadefenderLabel = new System.Windows.Forms.TextBox();
+            this.settingsPanel = new System.Windows.Forms.Panel();
+            this.APIKeysWarning = new System.Windows.Forms.Label();
+            this.saveSettingsButton = new System.Windows.Forms.Button();
+            this.saveLocationSettingsText = new System.Windows.Forms.TextBox();
+            this.saveLocationSettingsLabel = new System.Windows.Forms.Label();
+            this.SettingsHybridAnalysisText = new System.Windows.Forms.TextBox();
+            this.SettingsMetadefenderText = new System.Windows.Forms.TextBox();
+            this.SettingsAbuseIPDBText = new System.Windows.Forms.TextBox();
+            this.SettingsGeneralSettingsLabel = new System.Windows.Forms.Label();
+            this.SettingsCrackerModeCheckBox = new System.Windows.Forms.CheckBox();
+            this.SettingsHybridAnalysisAPILabel = new System.Windows.Forms.Label();
+            this.SettingsMetadefenderAPILabel = new System.Windows.Forms.Label();
+            this.SettingsAbuseIPDBAPILabel = new System.Windows.Forms.Label();
+            this.SettingsapiKeysLabel = new System.Windows.Forms.Label();
             this.Index.SuspendLayout();
             this.urlReputationPanel.SuspendLayout();
             this.analyzeFilePanel.SuspendLayout();
+            this.settingsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // Index
             // 
             this.Index.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(122)))));
-            this.Index.Controls.Add(this.button2);
+            this.Index.Controls.Add(this.settingsIndex);
+            this.Index.Controls.Add(this.about);
             this.Index.Controls.Add(this.fileAnalyzer);
             this.Index.Controls.Add(this.urlReputation);
             this.Index.Controls.Add(this.Logo);
@@ -87,18 +112,34 @@
             this.Index.Size = new System.Drawing.Size(200, 581);
             this.Index.TabIndex = 0;
             // 
-            // button2
+            // settingsIndex
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(0, 533);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(200, 48);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Settings";
-            this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button2.UseVisualStyleBackColor = true;
+            this.settingsIndex.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.settingsIndex.FlatAppearance.BorderSize = 0;
+            this.settingsIndex.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.settingsIndex.Image = global::SOCio.Properties.Resources.settings;
+            this.settingsIndex.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.settingsIndex.Location = new System.Drawing.Point(0, 485);
+            this.settingsIndex.Name = "settingsIndex";
+            this.settingsIndex.Size = new System.Drawing.Size(200, 48);
+            this.settingsIndex.TabIndex = 4;
+            this.settingsIndex.Text = "Settings";
+            this.settingsIndex.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.settingsIndex.UseVisualStyleBackColor = true;
+            this.settingsIndex.Click += new System.EventHandler(this.settings_Click);
+            // 
+            // about
+            // 
+            this.about.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.about.FlatAppearance.BorderSize = 0;
+            this.about.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.about.Location = new System.Drawing.Point(0, 533);
+            this.about.Name = "about";
+            this.about.Size = new System.Drawing.Size(200, 48);
+            this.about.TabIndex = 3;
+            this.about.Text = "About";
+            this.about.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.about.UseVisualStyleBackColor = true;
             // 
             // fileAnalyzer
             // 
@@ -106,6 +147,7 @@
             this.fileAnalyzer.FlatAppearance.BorderSize = 0;
             this.fileAnalyzer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.fileAnalyzer.Image = global::SOCio.Properties.Resources.malwarelogo;
+            this.fileAnalyzer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.fileAnalyzer.Location = new System.Drawing.Point(0, 148);
             this.fileAnalyzer.Name = "fileAnalyzer";
             this.fileAnalyzer.Size = new System.Drawing.Size(200, 48);
@@ -341,6 +383,11 @@
             // analyzeFilePanel
             // 
             this.analyzeFilePanel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.analyzeFilePanel.Controls.Add(this.saveResultAnalyzeButton);
+            this.analyzeFilePanel.Controls.Add(this.avDetectedLabel);
+            this.analyzeFilePanel.Controls.Add(this.metadefenderLink);
+            this.analyzeFilePanel.Controls.Add(this.metadefenderLabel);
+            this.analyzeFilePanel.Controls.Add(this.metaDefenderGraph);
             this.analyzeFilePanel.Controls.Add(this.virusFamilyText);
             this.analyzeFilePanel.Controls.Add(this.virusFamilyLabel);
             this.analyzeFilePanel.Controls.Add(this.fileInfoText);
@@ -356,6 +403,8 @@
             this.analyzeFilePanel.Controls.Add(this.sha256Label);
             this.analyzeFilePanel.Controls.Add(this.md5Label);
             this.analyzeFilePanel.Controls.Add(this.uploadFileButton);
+            this.analyzeFilePanel.Controls.Add(this.noDataHybridAnalysis);
+            this.analyzeFilePanel.Controls.Add(this.noDataMetadefenderLabel);
             this.analyzeFilePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.analyzeFilePanel.Location = new System.Drawing.Point(200, 0);
             this.analyzeFilePanel.Name = "analyzeFilePanel";
@@ -363,10 +412,92 @@
             this.analyzeFilePanel.TabIndex = 21;
             this.analyzeFilePanel.Visible = false;
             // 
+            // homePanel
+            // 
+            this.homePanel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.homePanel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.homePanel.Location = new System.Drawing.Point(200, 0);
+            this.homePanel.Name = "homePanel";
+            this.homePanel.Size = new System.Drawing.Size(834, 581);
+            this.homePanel.TabIndex = 23;
+            // 
+            // saveResultAnalyzeButton
+            // 
+            this.saveResultAnalyzeButton.Location = new System.Drawing.Point(111, 148);
+            this.saveResultAnalyzeButton.Name = "saveResultAnalyzeButton";
+            this.saveResultAnalyzeButton.Size = new System.Drawing.Size(75, 23);
+            this.saveResultAnalyzeButton.TabIndex = 20;
+            this.saveResultAnalyzeButton.Text = "Save Result";
+            this.saveResultAnalyzeButton.UseVisualStyleBackColor = true;
+            this.saveResultAnalyzeButton.Visible = false;
+            // 
+            // avDetectedLabel
+            // 
+            this.avDetectedLabel.AutoSize = true;
+            this.avDetectedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.avDetectedLabel.Location = new System.Drawing.Point(571, 380);
+            this.avDetectedLabel.Name = "avDetectedLabel";
+            this.avDetectedLabel.Size = new System.Drawing.Size(93, 16);
+            this.avDetectedLabel.TabIndex = 19;
+            this.avDetectedLabel.Text = "AV detected";
+            this.avDetectedLabel.Visible = false;
+            // 
+            // metadefenderLink
+            // 
+            this.metadefenderLink.AutoSize = true;
+            this.metadefenderLink.Location = new System.Drawing.Point(578, 434);
+            this.metadefenderLink.Name = "metadefenderLink";
+            this.metadefenderLink.Size = new System.Drawing.Size(71, 13);
+            this.metadefenderLink.TabIndex = 18;
+            this.metadefenderLink.TabStop = true;
+            this.metadefenderLink.Text = "Check Online";
+            this.metadefenderLink.Visible = false;
+            // 
+            // metadefenderLabel
+            // 
+            this.metadefenderLabel.AutoSize = true;
+            this.metadefenderLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.metadefenderLabel.Location = new System.Drawing.Point(496, 393);
+            this.metadefenderLabel.Name = "metadefenderLabel";
+            this.metadefenderLabel.Size = new System.Drawing.Size(233, 29);
+            this.metadefenderLabel.TabIndex = 17;
+            this.metadefenderLabel.Text = "Metadefender Cloud";
+            this.metadefenderLabel.Visible = false;
+            // 
+            // metaDefenderGraph
+            // 
+            this.metaDefenderGraph.Location = new System.Drawing.Point(490, 227);
+            this.metaDefenderGraph.Name = "metaDefenderGraph";
+            this.metaDefenderGraph.Size = new System.Drawing.Size(250, 152);
+            this.metaDefenderGraph.TabIndex = 16;
+            this.metaDefenderGraph.Text = "solidGauge1";
+            this.metaDefenderGraph.Visible = false;
+            // 
+            // virusFamilyText
+            // 
+            this.virusFamilyText.AutoSize = true;
+            this.virusFamilyText.Location = new System.Drawing.Point(273, 505);
+            this.virusFamilyText.Name = "virusFamilyText";
+            this.virusFamilyText.Size = new System.Drawing.Size(62, 13);
+            this.virusFamilyText.TabIndex = 15;
+            this.virusFamilyText.Text = "FileInfoText";
+            this.virusFamilyText.Visible = false;
+            // 
+            // virusFamilyLabel
+            // 
+            this.virusFamilyLabel.AutoSize = true;
+            this.virusFamilyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.virusFamilyLabel.Location = new System.Drawing.Point(191, 505);
+            this.virusFamilyLabel.Name = "virusFamilyLabel";
+            this.virusFamilyLabel.Size = new System.Drawing.Size(75, 13);
+            this.virusFamilyLabel.TabIndex = 14;
+            this.virusFamilyLabel.Text = "Virus family:";
+            this.virusFamilyLabel.Visible = false;
+            // 
             // fileInfoText
             // 
             this.fileInfoText.AutoSize = true;
-            this.fileInfoText.Location = new System.Drawing.Point(405, 498);
+            this.fileInfoText.Location = new System.Drawing.Point(273, 475);
             this.fileInfoText.Name = "fileInfoText";
             this.fileInfoText.Size = new System.Drawing.Size(62, 13);
             this.fileInfoText.TabIndex = 13;
@@ -377,7 +508,7 @@
             // 
             this.fileInfoLabel.AutoSize = true;
             this.fileInfoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fileInfoLabel.Location = new System.Drawing.Point(337, 498);
+            this.fileInfoLabel.Location = new System.Drawing.Point(205, 475);
             this.fileInfoLabel.Name = "fileInfoLabel";
             this.fileInfoLabel.Size = new System.Drawing.Size(57, 13);
             this.fileInfoLabel.TabIndex = 12;
@@ -387,7 +518,7 @@
             // hybridAnalysisLink
             // 
             this.hybridAnalysisLink.AutoSize = true;
-            this.hybridAnalysisLink.Location = new System.Drawing.Point(166, 462);
+            this.hybridAnalysisLink.Location = new System.Drawing.Point(159, 434);
             this.hybridAnalysisLink.Name = "hybridAnalysisLink";
             this.hybridAnalysisLink.Size = new System.Drawing.Size(71, 13);
             this.hybridAnalysisLink.TabIndex = 11;
@@ -399,7 +530,7 @@
             // 
             this.hybridAnalysisLabel.AutoSize = true;
             this.hybridAnalysisLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hybridAnalysisLabel.Location = new System.Drawing.Point(119, 421);
+            this.hybridAnalysisLabel.Location = new System.Drawing.Point(112, 393);
             this.hybridAnalysisLabel.Name = "hybridAnalysisLabel";
             this.hybridAnalysisLabel.Size = new System.Drawing.Size(179, 29);
             this.hybridAnalysisLabel.TabIndex = 10;
@@ -408,7 +539,7 @@
             // 
             // hybridAnalysisGraph
             // 
-            this.hybridAnalysisGraph.Location = new System.Drawing.Point(78, 255);
+            this.hybridAnalysisGraph.Location = new System.Drawing.Point(71, 227);
             this.hybridAnalysisGraph.Name = "hybridAnalysisGraph";
             this.hybridAnalysisGraph.Size = new System.Drawing.Size(250, 152);
             this.hybridAnalysisGraph.TabIndex = 9;
@@ -496,26 +627,174 @@
             this.uploadFileButton.Text = "Load File";
             this.uploadFileButton.UseVisualStyleBackColor = true;
             // 
-            // virusFamilyText
+            // noDataHybridAnalysis
             // 
-            this.virusFamilyText.AutoSize = true;
-            this.virusFamilyText.Location = new System.Drawing.Point(405, 528);
-            this.virusFamilyText.Name = "virusFamilyText";
-            this.virusFamilyText.Size = new System.Drawing.Size(62, 13);
-            this.virusFamilyText.TabIndex = 15;
-            this.virusFamilyText.Text = "FileInfoText";
-            this.virusFamilyText.Visible = false;
+            this.noDataHybridAnalysis.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.noDataHybridAnalysis.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.noDataHybridAnalysis.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.noDataHybridAnalysis.Location = new System.Drawing.Point(92, 313);
+            this.noDataHybridAnalysis.Multiline = true;
+            this.noDataHybridAnalysis.Name = "noDataHybridAnalysis";
+            this.noDataHybridAnalysis.Size = new System.Drawing.Size(271, 109);
+            this.noDataHybridAnalysis.TabIndex = 21;
+            this.noDataHybridAnalysis.Text = "No data provided \r\nfrom Hybrid-Analysis";
+            this.noDataHybridAnalysis.Visible = false;
             // 
-            // virusFamilyLabel
+            // noDataMetadefenderLabel
             // 
-            this.virusFamilyLabel.AutoSize = true;
-            this.virusFamilyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.virusFamilyLabel.Location = new System.Drawing.Point(323, 528);
-            this.virusFamilyLabel.Name = "virusFamilyLabel";
-            this.virusFamilyLabel.Size = new System.Drawing.Size(75, 13);
-            this.virusFamilyLabel.TabIndex = 14;
-            this.virusFamilyLabel.Text = "Virus family:";
-            this.virusFamilyLabel.Visible = false;
+            this.noDataMetadefenderLabel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.noDataMetadefenderLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.noDataMetadefenderLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.noDataMetadefenderLabel.Location = new System.Drawing.Point(521, 313);
+            this.noDataMetadefenderLabel.Multiline = true;
+            this.noDataMetadefenderLabel.Name = "noDataMetadefenderLabel";
+            this.noDataMetadefenderLabel.Size = new System.Drawing.Size(271, 109);
+            this.noDataMetadefenderLabel.TabIndex = 22;
+            this.noDataMetadefenderLabel.Text = "No data provided \r\nfrom Metadefender";
+            this.noDataMetadefenderLabel.Visible = false;
+            // 
+            // settingsPanel
+            // 
+            this.settingsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.settingsPanel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.settingsPanel.Controls.Add(this.APIKeysWarning);
+            this.settingsPanel.Controls.Add(this.saveSettingsButton);
+            this.settingsPanel.Controls.Add(this.saveLocationSettingsText);
+            this.settingsPanel.Controls.Add(this.saveLocationSettingsLabel);
+            this.settingsPanel.Controls.Add(this.SettingsHybridAnalysisText);
+            this.settingsPanel.Controls.Add(this.SettingsMetadefenderText);
+            this.settingsPanel.Controls.Add(this.SettingsAbuseIPDBText);
+            this.settingsPanel.Controls.Add(this.SettingsGeneralSettingsLabel);
+            this.settingsPanel.Controls.Add(this.SettingsCrackerModeCheckBox);
+            this.settingsPanel.Controls.Add(this.SettingsHybridAnalysisAPILabel);
+            this.settingsPanel.Controls.Add(this.SettingsMetadefenderAPILabel);
+            this.settingsPanel.Controls.Add(this.SettingsAbuseIPDBAPILabel);
+            this.settingsPanel.Controls.Add(this.SettingsapiKeysLabel);
+            this.settingsPanel.Location = new System.Drawing.Point(199, 0);
+            this.settingsPanel.Name = "settingsPanel";
+            this.settingsPanel.Size = new System.Drawing.Size(834, 581);
+            this.settingsPanel.TabIndex = 20;
+            // 
+            // APIKeysWarning
+            // 
+            this.APIKeysWarning.AutoSize = true;
+            this.APIKeysWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.APIKeysWarning.Location = new System.Drawing.Point(495, 26);
+            this.APIKeysWarning.Name = "APIKeysWarning";
+            this.APIKeysWarning.Size = new System.Drawing.Size(276, 25);
+            this.APIKeysWarning.TabIndex = 12;
+            this.APIKeysWarning.Text = "Never share your API Keys!";
+            // 
+            // saveSettingsButton
+            // 
+            this.saveSettingsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveSettingsButton.Location = new System.Drawing.Point(353, 519);
+            this.saveSettingsButton.Name = "saveSettingsButton";
+            this.saveSettingsButton.Size = new System.Drawing.Size(75, 34);
+            this.saveSettingsButton.TabIndex = 11;
+            this.saveSettingsButton.Text = "Save";
+            this.saveSettingsButton.UseVisualStyleBackColor = true;
+            // 
+            // saveLocationSettingsText
+            // 
+            this.saveLocationSettingsText.Location = new System.Drawing.Point(170, 268);
+            this.saveLocationSettingsText.Name = "saveLocationSettingsText";
+            this.saveLocationSettingsText.Size = new System.Drawing.Size(601, 20);
+            this.saveLocationSettingsText.TabIndex = 10;
+            // 
+            // saveLocationSettingsLabel
+            // 
+            this.saveLocationSettingsLabel.AutoSize = true;
+            this.saveLocationSettingsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveLocationSettingsLabel.Location = new System.Drawing.Point(31, 268);
+            this.saveLocationSettingsLabel.Name = "saveLocationSettingsLabel";
+            this.saveLocationSettingsLabel.Size = new System.Drawing.Size(122, 20);
+            this.saveLocationSettingsLabel.TabIndex = 9;
+            this.saveLocationSettingsLabel.Text = "Save location:";
+            // 
+            // SettingsHybridAnalysisText
+            // 
+            this.SettingsHybridAnalysisText.Location = new System.Drawing.Point(170, 140);
+            this.SettingsHybridAnalysisText.Name = "SettingsHybridAnalysisText";
+            this.SettingsHybridAnalysisText.Size = new System.Drawing.Size(601, 20);
+            this.SettingsHybridAnalysisText.TabIndex = 8;
+            // 
+            // SettingsMetadefenderText
+            // 
+            this.SettingsMetadefenderText.Location = new System.Drawing.Point(170, 104);
+            this.SettingsMetadefenderText.Name = "SettingsMetadefenderText";
+            this.SettingsMetadefenderText.Size = new System.Drawing.Size(601, 20);
+            this.SettingsMetadefenderText.TabIndex = 7;
+            // 
+            // SettingsAbuseIPDBText
+            // 
+            this.SettingsAbuseIPDBText.Location = new System.Drawing.Point(170, 69);
+            this.SettingsAbuseIPDBText.Name = "SettingsAbuseIPDBText";
+            this.SettingsAbuseIPDBText.Size = new System.Drawing.Size(601, 20);
+            this.SettingsAbuseIPDBText.TabIndex = 6;
+            // 
+            // SettingsGeneralSettingsLabel
+            // 
+            this.SettingsGeneralSettingsLabel.AutoSize = true;
+            this.SettingsGeneralSettingsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SettingsGeneralSettingsLabel.Location = new System.Drawing.Point(33, 217);
+            this.SettingsGeneralSettingsLabel.Name = "SettingsGeneralSettingsLabel";
+            this.SettingsGeneralSettingsLabel.Size = new System.Drawing.Size(192, 25);
+            this.SettingsGeneralSettingsLabel.TabIndex = 5;
+            this.SettingsGeneralSettingsLabel.Text = "General settings:";
+            // 
+            // SettingsCrackerModeCheckBox
+            // 
+            this.SettingsCrackerModeCheckBox.AutoSize = true;
+            this.SettingsCrackerModeCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SettingsCrackerModeCheckBox.Location = new System.Drawing.Point(317, 434);
+            this.SettingsCrackerModeCheckBox.Name = "SettingsCrackerModeCheckBox";
+            this.SettingsCrackerModeCheckBox.Size = new System.Drawing.Size(166, 29);
+            this.SettingsCrackerModeCheckBox.TabIndex = 4;
+            this.SettingsCrackerModeCheckBox.Text = "Cracker Mode";
+            this.SettingsCrackerModeCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // SettingsHybridAnalysisAPILabel
+            // 
+            this.SettingsHybridAnalysisAPILabel.AutoSize = true;
+            this.SettingsHybridAnalysisAPILabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SettingsHybridAnalysisAPILabel.Location = new System.Drawing.Point(23, 140);
+            this.SettingsHybridAnalysisAPILabel.Name = "SettingsHybridAnalysisAPILabel";
+            this.SettingsHybridAnalysisAPILabel.Size = new System.Drawing.Size(137, 20);
+            this.SettingsHybridAnalysisAPILabel.TabIndex = 3;
+            this.SettingsHybridAnalysisAPILabel.Text = "Hybrid-Analysis:";
+            // 
+            // SettingsMetadefenderAPILabel
+            // 
+            this.SettingsMetadefenderAPILabel.AutoSize = true;
+            this.SettingsMetadefenderAPILabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SettingsMetadefenderAPILabel.Location = new System.Drawing.Point(34, 104);
+            this.SettingsMetadefenderAPILabel.Name = "SettingsMetadefenderAPILabel";
+            this.SettingsMetadefenderAPILabel.Size = new System.Drawing.Size(126, 20);
+            this.SettingsMetadefenderAPILabel.TabIndex = 2;
+            this.SettingsMetadefenderAPILabel.Text = "Metadefender:";
+            // 
+            // SettingsAbuseIPDBAPILabel
+            // 
+            this.SettingsAbuseIPDBAPILabel.AutoSize = true;
+            this.SettingsAbuseIPDBAPILabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SettingsAbuseIPDBAPILabel.Location = new System.Drawing.Point(53, 69);
+            this.SettingsAbuseIPDBAPILabel.Name = "SettingsAbuseIPDBAPILabel";
+            this.SettingsAbuseIPDBAPILabel.Size = new System.Drawing.Size(107, 20);
+            this.SettingsAbuseIPDBAPILabel.TabIndex = 1;
+            this.SettingsAbuseIPDBAPILabel.Text = "AbuseIPDB:";
+            // 
+            // SettingsapiKeysLabel
+            // 
+            this.SettingsapiKeysLabel.AutoSize = true;
+            this.SettingsapiKeysLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SettingsapiKeysLabel.Location = new System.Drawing.Point(26, 26);
+            this.SettingsapiKeysLabel.Name = "SettingsapiKeysLabel";
+            this.SettingsapiKeysLabel.Size = new System.Drawing.Size(114, 25);
+            this.SettingsapiKeysLabel.TabIndex = 0;
+            this.SettingsapiKeysLabel.Text = "API Keys:";
             // 
             // MainMenu
             // 
@@ -524,7 +803,9 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1034, 581);
+            this.Controls.Add(this.homePanel);
             this.Controls.Add(this.analyzeFilePanel);
+            this.Controls.Add(this.settingsPanel);
             this.Controls.Add(this.Index);
             this.Controls.Add(this.urlReputationPanel);
             this.Name = "MainMenu";
@@ -534,6 +815,8 @@
             this.urlReputationPanel.PerformLayout();
             this.analyzeFilePanel.ResumeLayout(false);
             this.analyzeFilePanel.PerformLayout();
+            this.settingsPanel.ResumeLayout(false);
+            this.settingsPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -550,7 +833,7 @@
         public LiveCharts.WinForms.SolidGauge abuseIPDBgraph;
         public System.Windows.Forms.Label abuseIPDBlabel;
         public System.Windows.Forms.ProgressBar progressBarUrlReputation;
-        public System.Windows.Forms.Button button2;
+        public System.Windows.Forms.Button about;
         public System.Windows.Forms.Button exportResultsButton;
         public System.Windows.Forms.Label countryNameResponse;
         public System.Windows.Forms.Label ispResponselabel;
@@ -580,6 +863,29 @@
         public System.Windows.Forms.Label fileInfoLabel;
         public System.Windows.Forms.Label virusFamilyText;
         public System.Windows.Forms.Label virusFamilyLabel;
+        public System.Windows.Forms.LinkLabel metadefenderLink;
+        public System.Windows.Forms.Label metadefenderLabel;
+        public LiveCharts.WinForms.SolidGauge metaDefenderGraph;
+        public System.Windows.Forms.Label avDetectedLabel;
+        public System.Windows.Forms.Button settingsIndex;
+        public System.Windows.Forms.Panel settingsPanel;
+        public System.Windows.Forms.Label SettingsAbuseIPDBAPILabel;
+        public System.Windows.Forms.Label SettingsapiKeysLabel;
+        public System.Windows.Forms.Label SettingsHybridAnalysisAPILabel;
+        public System.Windows.Forms.Label SettingsMetadefenderAPILabel;
+        public System.Windows.Forms.Label SettingsGeneralSettingsLabel;
+        public System.Windows.Forms.CheckBox SettingsCrackerModeCheckBox;
+        public System.Windows.Forms.TextBox SettingsHybridAnalysisText;
+        public System.Windows.Forms.TextBox SettingsMetadefenderText;
+        public System.Windows.Forms.TextBox SettingsAbuseIPDBText;
+        public System.Windows.Forms.Button saveResultAnalyzeButton;
+        public System.Windows.Forms.TextBox saveLocationSettingsText;
+        public System.Windows.Forms.Label saveLocationSettingsLabel;
+        public System.Windows.Forms.Button saveSettingsButton;
+        public System.Windows.Forms.Label APIKeysWarning;
+        public System.Windows.Forms.TextBox noDataHybridAnalysis;
+        public System.Windows.Forms.TextBox noDataMetadefenderLabel;
+        public System.Windows.Forms.Panel homePanel;
     }
 }
 
