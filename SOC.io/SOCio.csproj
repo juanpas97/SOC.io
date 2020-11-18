@@ -52,7 +52,8 @@
     </StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Properties\icon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
@@ -89,6 +90,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About\About.cs" />
     <Compile Include="Analyze file\Analyze_File.cs" />
     <Compile Include="Analyze file\HybridAnalysis.cs" />
     <Compile Include="Analyze file\Metadefender.cs" />
@@ -133,12 +135,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\graphbarlogo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\malwarelogo.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.7.2 %28x86 y x64%29</ProductName>
@@ -151,10 +147,29 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\icon.ico" />
+    <None Include="Resources\graphbarlogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\settings.png" />
+    <None Include="Resources\malwarelogo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SmallBanner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\soc.io_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\crackermusic.wav" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

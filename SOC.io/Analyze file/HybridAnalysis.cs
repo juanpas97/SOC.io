@@ -29,6 +29,7 @@ namespace SOCio.Analyze_file
         public string virusFamily = string.Empty;
         public int score = int.MinValue;
         public string fileInfo = string.Empty;
+        public string verdict = string.Empty;
         public List<string> tags = new List<string>();
 
         #endregion
@@ -89,9 +90,23 @@ namespace SOCio.Analyze_file
                                     //The best way to parse this would be using the JSON info. I have not been able to do it. We will use RegExp instead
                                     //TODO: Parse this into string operation to gain performance.
                                     this.virusFamily = Regex.Match(responseUnparsed, @"vx_family"":""" + "(.+?)\"").Groups[1].Value;
-                                    this.score  = Convert.ToInt32(Regex.Match(responseUnparsed, @"threat_score"":" + "(.+?),").Groups[1].Value);
+                                    try
+                                    {
+                                        this.score = Convert.ToInt32(Regex.Match(responseUnparsed, @"threat_score"":" + "(.+?),").Groups[1].Value);
+                                    }
+                                    catch (Exception ex) {
+                                        Logger.Warn($"Threat score could not be parsed from Hybrid Analysis: {ex.StackTrace} - {ex.Message}");
+                                    }
+                                    try
+                                    {
+                                        this.verdict = Regex.Match(responseUnparsed, @"verdict"":""" + "(.+?)\"").Groups[1].Value;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Logger.Warn($"Verdict could not be parsed from Hybrid Analysis: {ex.StackTrace} - {ex.Message}");
+                                    }
                                     this.fileInfo = Regex.Match(responseUnparsed, @"type"":""" + "(.+?)\"").Groups[1].Value;
-                                    string classifitacion = Regex.Match(responseUnparsed, @"classification_tags"":\[" + @"(.+?)""\]").Groups[1].Value;
+                                    string classifitacion = Regex.Match(responseUnparsed, @"""tags"":\[" + @"(.*?)""\]").Groups[1].Value;
                                     this.tags = classifitacion.Replace("\"", "").Split(',').ToList();
                                     this.processFinished = true;
                                 }

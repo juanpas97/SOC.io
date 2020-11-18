@@ -18,6 +18,7 @@ namespace SOCio.URL_Reputation
         public string classification = string.Empty;
         public int parsedResult = int.MinValue;
 
+        public bool processFinished = false;
 
         public Maltiverse() {
             this.Logger = LogManager.GetLogger(Assembly.GetExecutingAssembly().GetTypes().First());
@@ -46,21 +47,25 @@ namespace SOCio.URL_Reputation
                         //Source: https://app.swaggerhub.com/apis-docs/maltiverse/api/1.0.0-oas3#/IPv4/getIP
                         try
                         {
-                            this.classification = Regex.Match(responseUnparsed, @"classification"": """ + "(.+?)\",").Groups[1].Value;
+                            this.classification = Regex.Match(responseUnparsed, @"classification"":""" + "(.+?)\",").Groups[1].Value;
                             this.parsedResult = parseResult();
                         }
                         catch (Exception ex) {
 
                             Logger.Error($"Error parsing response from Maltiverse: {ex.StackTrace} - {ex.Message}");
-
+                            processFinished = true;
                         }
 
                     }
                     else
                     {
                         Logger.Error($"Status code from Maltiverse is: " + response.StatusCode);
+                        processFinished = true;
                         return;
                     }
+
+                    processFinished = true;
+                    return;
 
                 }
             }

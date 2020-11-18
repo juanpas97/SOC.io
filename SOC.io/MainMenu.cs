@@ -90,6 +90,25 @@ namespace SOCio
             SettingsMenu settings = new SettingsMenu(this);
         }
 
+        private void homeButton_Click(object sender, EventArgs e)
+        {
+            hidePanels();
+            deselectIndexButtons();
+            homeButton.BackColor = selectedColor;
+            homePanel.Visible = true;
+            homePanel.BringToFront();
+        }
+
+        private void about_Click(object sender, EventArgs e)
+        {
+            hidePanels();
+            deselectIndexButtons();
+            about.BackColor = selectedColor;
+            aboutPanel.Visible = true;
+            aboutPanel.BringToFront();
+        }
+
+
     }
 }
 

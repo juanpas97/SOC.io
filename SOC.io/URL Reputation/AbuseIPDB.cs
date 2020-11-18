@@ -24,8 +24,9 @@ namespace SOCio.URLReputation
         public string domain;
         public string isp;
         public int totalReports = int.MinValue;
-        public List<string> hostnames;
+        public List<string> hostnames = new List<string>();
 
+        public bool processFinished = false;
 
         public ILog Logger { get; set; }
 
@@ -64,11 +65,13 @@ namespace SOCio.URLReputation
                         }
                         else {
                             Logger.Warn("Status from AbuseIPDB is: " + response.StatusCode);
+                            processFinished = true;
                             return;
                         }
                     }
                     catch (Exception ex) {
                         Logger.Error($"Error getting info from AbuseIPDB: {ex.StackTrace} - {ex.Message}");
+                        processFinished = true;
                         return;
                     }
                     try
@@ -88,19 +91,22 @@ namespace SOCio.URLReputation
                             this.hostnames = hostnamesUnparsed.Replace("\"","").Split(',').ToList();
                         }
                         else {
+                            processFinished = true;
                             return;
                         }
 
+                        processFinished = true;
                         Logger.Debug("Parsing from AbuseIPDB finished correctly");
                         return;
                     }
                     catch (Exception ex) {
+                        processFinished = true;
                         Logger.Error($"Error Parsing info from AbuseIPDB: {ex.StackTrace} - {ex.Message}");
                         return;
                     }
                 }
             }
 
-        }
+          }
     }
 }

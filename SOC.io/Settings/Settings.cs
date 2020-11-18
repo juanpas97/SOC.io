@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Media;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,13 +49,21 @@ namespace SOCio.Settings
             Configuration configuration =
                 ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-            configuration.AppSettings.Settings["AbuseIPDB"].Value = form.SettingsHybridAnalysisText.Text;
+            configuration.AppSettings.Settings["AbuseIPDB"].Value = form.SettingsAbuseIPDBText.Text;
             configuration.AppSettings.Settings["Metadefender"].Value = form.SettingsMetadefenderText.Text;
             configuration.AppSettings.Settings["HybridAnalysis"].Value = form.SettingsHybridAnalysisText.Text;
             configuration.AppSettings.Settings["SaveLocation"].Value = form.saveLocationSettingsText.Text;
 
             configuration.Save(ConfigurationSaveMode.Full, true);
             ConfigurationManager.RefreshSection("appSettings");
+
+            if (form.SettingsCrackerModeCheckBox.Checked == true)
+            {
+                form.sound.PlayLooping();
+            }
+            else {
+                form.sound.Stop();
+            }
 
         }
     }

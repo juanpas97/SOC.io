@@ -1,4 +1,7 @@
-﻿namespace SOCio
+﻿using System.Drawing;
+using System.Media;
+
+namespace SOCio
 {
     public partial class MainMenu
     {
@@ -28,12 +31,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
             this.Index = new System.Windows.Forms.Panel();
             this.settingsIndex = new System.Windows.Forms.Button();
             this.about = new System.Windows.Forms.Button();
             this.fileAnalyzer = new System.Windows.Forms.Button();
             this.urlReputation = new System.Windows.Forms.Button();
             this.Logo = new System.Windows.Forms.Panel();
+            this.homeButton = new System.Windows.Forms.Button();
             this.urlReputationPanel = new System.Windows.Forms.Panel();
             this.urlScanLabel = new System.Windows.Forms.Label();
             this.maltiverseLabel = new System.Windows.Forms.Label();
@@ -48,13 +53,16 @@
             this.hostnameLabel = new System.Windows.Forms.Label();
             this.ipLabel = new System.Windows.Forms.Label();
             this.exportResultsButton = new System.Windows.Forms.Button();
-            this.progressBarUrlReputation = new System.Windows.Forms.ProgressBar();
             this.abuseIPDBlabel = new System.Windows.Forms.Label();
             this.abuseIPDBgraph = new LiveCharts.WinForms.SolidGauge();
             this.urlReputationSearch = new System.Windows.Forms.Button();
             this.urlReputationTextbox = new System.Windows.Forms.TextBox();
+            this.noDataURLScanLabel = new System.Windows.Forms.TextBox();
+            this.noDataMaltiverseLabel = new System.Windows.Forms.TextBox();
+            this.noDataAbuseIPDBLabel = new System.Windows.Forms.TextBox();
             this.analyzeFilePanel = new System.Windows.Forms.Panel();
-            this.homePanel = new System.Windows.Forms.Panel();
+            this.categoriesUrlText = new System.Windows.Forms.Label();
+            this.categoriesUrlLabel = new System.Windows.Forms.Label();
             this.saveResultAnalyzeButton = new System.Windows.Forms.Button();
             this.avDetectedLabel = new System.Windows.Forms.Label();
             this.metadefenderLink = new System.Windows.Forms.LinkLabel();
@@ -77,6 +85,8 @@
             this.uploadFileButton = new System.Windows.Forms.Button();
             this.noDataHybridAnalysis = new System.Windows.Forms.TextBox();
             this.noDataMetadefenderLabel = new System.Windows.Forms.TextBox();
+            this.homePanel = new System.Windows.Forms.Panel();
+            this.mainLogo = new System.Windows.Forms.Button();
             this.settingsPanel = new System.Windows.Forms.Panel();
             this.APIKeysWarning = new System.Windows.Forms.Label();
             this.saveSettingsButton = new System.Windows.Forms.Button();
@@ -91,10 +101,18 @@
             this.SettingsMetadefenderAPILabel = new System.Windows.Forms.Label();
             this.SettingsAbuseIPDBAPILabel = new System.Windows.Forms.Label();
             this.SettingsapiKeysLabel = new System.Windows.Forms.Label();
+            this.aboutPanel = new System.Windows.Forms.Panel();
+            this.githubLink = new System.Windows.Forms.LinkLabel();
+            this.contact = new System.Windows.Forms.Label();
+            this.credits = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.Index.SuspendLayout();
+            this.Logo.SuspendLayout();
             this.urlReputationPanel.SuspendLayout();
             this.analyzeFilePanel.SuspendLayout();
+            this.homePanel.SuspendLayout();
             this.settingsPanel.SuspendLayout();
+            this.aboutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // Index
@@ -117,7 +135,7 @@
             this.settingsIndex.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.settingsIndex.FlatAppearance.BorderSize = 0;
             this.settingsIndex.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.settingsIndex.Image = global::SOCio.Properties.Resources.settings;
+            this.settingsIndex.Image = ((System.Drawing.Image)(resources.GetObject("settingsIndex.Image")));
             this.settingsIndex.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.settingsIndex.Location = new System.Drawing.Point(0, 485);
             this.settingsIndex.Name = "settingsIndex";
@@ -140,13 +158,14 @@
             this.about.Text = "About";
             this.about.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.about.UseVisualStyleBackColor = true;
+            this.about.Click += new System.EventHandler(this.about_Click);
             // 
             // fileAnalyzer
             // 
             this.fileAnalyzer.Dock = System.Windows.Forms.DockStyle.Top;
             this.fileAnalyzer.FlatAppearance.BorderSize = 0;
             this.fileAnalyzer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.fileAnalyzer.Image = global::SOCio.Properties.Resources.malwarelogo;
+            this.fileAnalyzer.Image = ((System.Drawing.Image)(resources.GetObject("fileAnalyzer.Image")));
             this.fileAnalyzer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.fileAnalyzer.Location = new System.Drawing.Point(0, 148);
             this.fileAnalyzer.Name = "fileAnalyzer";
@@ -161,7 +180,7 @@
             this.urlReputation.Dock = System.Windows.Forms.DockStyle.Top;
             this.urlReputation.FlatAppearance.BorderSize = 0;
             this.urlReputation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.urlReputation.Image = global::SOCio.Properties.Resources.graphbarlogo;
+            this.urlReputation.Image = ((System.Drawing.Image)(resources.GetObject("urlReputation.Image")));
             this.urlReputation.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.urlReputation.Location = new System.Drawing.Point(0, 100);
             this.urlReputation.Name = "urlReputation";
@@ -175,11 +194,24 @@
             // 
             // Logo
             // 
+            this.Logo.Controls.Add(this.homeButton);
             this.Logo.Dock = System.Windows.Forms.DockStyle.Top;
             this.Logo.Location = new System.Drawing.Point(0, 0);
             this.Logo.Name = "Logo";
             this.Logo.Size = new System.Drawing.Size(200, 100);
             this.Logo.TabIndex = 0;
+            // 
+            // homeButton
+            // 
+            this.homeButton.FlatAppearance.BorderSize = 0;
+            this.homeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.homeButton.Image = ((System.Drawing.Image)(resources.GetObject("homeButton.Image")));
+            this.homeButton.Location = new System.Drawing.Point(0, 0);
+            this.homeButton.Name = "homeButton";
+            this.homeButton.Size = new System.Drawing.Size(200, 100);
+            this.homeButton.TabIndex = 0;
+            this.homeButton.UseVisualStyleBackColor = true;
+            this.homeButton.Click += new System.EventHandler(this.homeButton_Click);
             // 
             // urlReputationPanel
             // 
@@ -197,15 +229,17 @@
             this.urlReputationPanel.Controls.Add(this.hostnameLabel);
             this.urlReputationPanel.Controls.Add(this.ipLabel);
             this.urlReputationPanel.Controls.Add(this.exportResultsButton);
-            this.urlReputationPanel.Controls.Add(this.progressBarUrlReputation);
             this.urlReputationPanel.Controls.Add(this.abuseIPDBlabel);
             this.urlReputationPanel.Controls.Add(this.abuseIPDBgraph);
             this.urlReputationPanel.Controls.Add(this.urlReputationSearch);
             this.urlReputationPanel.Controls.Add(this.urlReputationTextbox);
+            this.urlReputationPanel.Controls.Add(this.noDataURLScanLabel);
+            this.urlReputationPanel.Controls.Add(this.noDataMaltiverseLabel);
+            this.urlReputationPanel.Controls.Add(this.noDataAbuseIPDBLabel);
             this.urlReputationPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.urlReputationPanel.Location = new System.Drawing.Point(0, 0);
+            this.urlReputationPanel.Location = new System.Drawing.Point(200, 0);
             this.urlReputationPanel.Name = "urlReputationPanel";
-            this.urlReputationPanel.Size = new System.Drawing.Size(1034, 581);
+            this.urlReputationPanel.Size = new System.Drawing.Size(834, 581);
             this.urlReputationPanel.TabIndex = 1;
             this.urlReputationPanel.Visible = false;
             // 
@@ -333,14 +367,7 @@
             this.exportResultsButton.TabIndex = 8;
             this.exportResultsButton.Text = "Export Results";
             this.exportResultsButton.UseVisualStyleBackColor = true;
-            // 
-            // progressBarUrlReputation
-            // 
-            this.progressBarUrlReputation.Location = new System.Drawing.Point(369, 322);
-            this.progressBarUrlReputation.Name = "progressBarUrlReputation";
-            this.progressBarUrlReputation.Size = new System.Drawing.Size(100, 23);
-            this.progressBarUrlReputation.TabIndex = 7;
-            this.progressBarUrlReputation.Visible = false;
+            this.exportResultsButton.Visible = false;
             // 
             // abuseIPDBlabel
             // 
@@ -380,9 +407,50 @@
             this.urlReputationTextbox.Size = new System.Drawing.Size(594, 20);
             this.urlReputationTextbox.TabIndex = 3;
             // 
+            // noDataURLScanLabel
+            // 
+            this.noDataURLScanLabel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.noDataURLScanLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.noDataURLScanLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.noDataURLScanLabel.Location = new System.Drawing.Point(109, 450);
+            this.noDataURLScanLabel.Multiline = true;
+            this.noDataURLScanLabel.Name = "noDataURLScanLabel";
+            this.noDataURLScanLabel.Size = new System.Drawing.Size(215, 84);
+            this.noDataURLScanLabel.TabIndex = 21;
+            this.noDataURLScanLabel.Text = "No data provided from\r\n URLScan.IO";
+            this.noDataURLScanLabel.Visible = false;
+            // 
+            // noDataMaltiverseLabel
+            // 
+            this.noDataMaltiverseLabel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.noDataMaltiverseLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.noDataMaltiverseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.noDataMaltiverseLabel.Location = new System.Drawing.Point(501, 212);
+            this.noDataMaltiverseLabel.Multiline = true;
+            this.noDataMaltiverseLabel.Name = "noDataMaltiverseLabel";
+            this.noDataMaltiverseLabel.Size = new System.Drawing.Size(215, 84);
+            this.noDataMaltiverseLabel.TabIndex = 22;
+            this.noDataMaltiverseLabel.Text = "No data provided from\r Maltiverse";
+            this.noDataMaltiverseLabel.Visible = false;
+            // 
+            // noDataAbuseIPDBLabel
+            // 
+            this.noDataAbuseIPDBLabel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.noDataAbuseIPDBLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.noDataAbuseIPDBLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.noDataAbuseIPDBLabel.Location = new System.Drawing.Point(111, 223);
+            this.noDataAbuseIPDBLabel.Multiline = true;
+            this.noDataAbuseIPDBLabel.Name = "noDataAbuseIPDBLabel";
+            this.noDataAbuseIPDBLabel.Size = new System.Drawing.Size(215, 84);
+            this.noDataAbuseIPDBLabel.TabIndex = 23;
+            this.noDataAbuseIPDBLabel.Text = "No data provided from\r AbuseIPDB";
+            this.noDataAbuseIPDBLabel.Visible = false;
+            // 
             // analyzeFilePanel
             // 
             this.analyzeFilePanel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.analyzeFilePanel.Controls.Add(this.categoriesUrlText);
+            this.analyzeFilePanel.Controls.Add(this.categoriesUrlLabel);
             this.analyzeFilePanel.Controls.Add(this.saveResultAnalyzeButton);
             this.analyzeFilePanel.Controls.Add(this.avDetectedLabel);
             this.analyzeFilePanel.Controls.Add(this.metadefenderLink);
@@ -412,14 +480,26 @@
             this.analyzeFilePanel.TabIndex = 21;
             this.analyzeFilePanel.Visible = false;
             // 
-            // homePanel
+            // categoriesUrlText
             // 
-            this.homePanel.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.homePanel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.homePanel.Location = new System.Drawing.Point(200, 0);
-            this.homePanel.Name = "homePanel";
-            this.homePanel.Size = new System.Drawing.Size(834, 581);
-            this.homePanel.TabIndex = 23;
+            this.categoriesUrlText.AutoSize = true;
+            this.categoriesUrlText.Location = new System.Drawing.Point(273, 533);
+            this.categoriesUrlText.Name = "categoriesUrlText";
+            this.categoriesUrlText.Size = new System.Drawing.Size(90, 13);
+            this.categoriesUrlText.TabIndex = 24;
+            this.categoriesUrlText.Text = "categoriesUrlText";
+            this.categoriesUrlText.Visible = false;
+            // 
+            // categoriesUrlLabel
+            // 
+            this.categoriesUrlLabel.AutoSize = true;
+            this.categoriesUrlLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.categoriesUrlLabel.Location = new System.Drawing.Point(191, 531);
+            this.categoriesUrlLabel.Name = "categoriesUrlLabel";
+            this.categoriesUrlLabel.Size = new System.Drawing.Size(71, 13);
+            this.categoriesUrlLabel.TabIndex = 23;
+            this.categoriesUrlLabel.Text = "Categories:";
+            this.categoriesUrlLabel.Visible = false;
             // 
             // saveResultAnalyzeButton
             // 
@@ -487,7 +567,7 @@
             // 
             this.virusFamilyLabel.AutoSize = true;
             this.virusFamilyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.virusFamilyLabel.Location = new System.Drawing.Point(191, 505);
+            this.virusFamilyLabel.Location = new System.Drawing.Point(187, 505);
             this.virusFamilyLabel.Name = "virusFamilyLabel";
             this.virusFamilyLabel.Size = new System.Drawing.Size(75, 13);
             this.virusFamilyLabel.TabIndex = 14;
@@ -653,6 +733,29 @@
             this.noDataMetadefenderLabel.Text = "No data provided \r\nfrom Metadefender";
             this.noDataMetadefenderLabel.Visible = false;
             // 
+            // homePanel
+            // 
+            this.homePanel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.homePanel.Controls.Add(this.mainLogo);
+            this.homePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.homePanel.Location = new System.Drawing.Point(200, 0);
+            this.homePanel.Name = "homePanel";
+            this.homePanel.Size = new System.Drawing.Size(834, 581);
+            this.homePanel.TabIndex = 23;
+            // 
+            // mainLogo
+            // 
+            this.mainLogo.Enabled = false;
+            this.mainLogo.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.mainLogo.FlatAppearance.BorderSize = 0;
+            this.mainLogo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mainLogo.Image = ((System.Drawing.Image)(resources.GetObject("mainLogo.Image")));
+            this.mainLogo.Location = new System.Drawing.Point(52, 163);
+            this.mainLogo.Name = "mainLogo";
+            this.mainLogo.Size = new System.Drawing.Size(752, 245);
+            this.mainLogo.TabIndex = 0;
+            this.mainLogo.UseVisualStyleBackColor = true;
+            // 
             // settingsPanel
             // 
             this.settingsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -796,6 +899,61 @@
             this.SettingsapiKeysLabel.TabIndex = 0;
             this.SettingsapiKeysLabel.Text = "API Keys:";
             // 
+            // aboutPanel
+            // 
+            this.aboutPanel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.aboutPanel.Controls.Add(this.githubLink);
+            this.aboutPanel.Controls.Add(this.contact);
+            this.aboutPanel.Controls.Add(this.credits);
+            this.aboutPanel.Controls.Add(this.button1);
+            this.aboutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.aboutPanel.Location = new System.Drawing.Point(200, 0);
+            this.aboutPanel.Name = "aboutPanel";
+            this.aboutPanel.Size = new System.Drawing.Size(834, 581);
+            this.aboutPanel.TabIndex = 24;
+            // 
+            // githubLink
+            // 
+            this.githubLink.AutoSize = true;
+            this.githubLink.Location = new System.Drawing.Point(313, 488);
+            this.githubLink.Name = "githubLink";
+            this.githubLink.Size = new System.Drawing.Size(149, 13);
+            this.githubLink.TabIndex = 3;
+            this.githubLink.TabStop = true;
+            this.githubLink.Text = "https://github.com/juanpas97";
+            // 
+            // contact
+            // 
+            this.contact.AutoSize = true;
+            this.contact.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.contact.Location = new System.Drawing.Point(34, 488);
+            this.contact.Name = "contact";
+            this.contact.Size = new System.Drawing.Size(276, 13);
+            this.contact.TabIndex = 2;
+            this.contact.Text = "For any contact, please check my GitHub links:";
+            // 
+            // credits
+            // 
+            this.credits.AutoSize = true;
+            this.credits.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.credits.Location = new System.Drawing.Point(31, 459);
+            this.credits.Name = "credits";
+            this.credits.Size = new System.Drawing.Size(254, 13);
+            this.credits.TabIndex = 1;
+            this.credits.Text = "This product is proudly made by Juan Perez";
+            // 
+            // button1
+            // 
+            this.button1.Enabled = false;
+            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(52, 163);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(752, 245);
+            this.button1.TabIndex = 0;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -804,19 +962,24 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1034, 581);
             this.Controls.Add(this.homePanel);
+            this.Controls.Add(this.aboutPanel);
             this.Controls.Add(this.analyzeFilePanel);
+            this.Controls.Add(this.urlReputationPanel);
             this.Controls.Add(this.settingsPanel);
             this.Controls.Add(this.Index);
-            this.Controls.Add(this.urlReputationPanel);
             this.Name = "MainMenu";
             this.Text = "SOC.io";
             this.Index.ResumeLayout(false);
+            this.Logo.ResumeLayout(false);
             this.urlReputationPanel.ResumeLayout(false);
             this.urlReputationPanel.PerformLayout();
             this.analyzeFilePanel.ResumeLayout(false);
             this.analyzeFilePanel.PerformLayout();
+            this.homePanel.ResumeLayout(false);
             this.settingsPanel.ResumeLayout(false);
             this.settingsPanel.PerformLayout();
+            this.aboutPanel.ResumeLayout(false);
+            this.aboutPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -832,7 +995,6 @@
         public System.Windows.Forms.Button urlReputationSearch;
         public LiveCharts.WinForms.SolidGauge abuseIPDBgraph;
         public System.Windows.Forms.Label abuseIPDBlabel;
-        public System.Windows.Forms.ProgressBar progressBarUrlReputation;
         public System.Windows.Forms.Button about;
         public System.Windows.Forms.Button exportResultsButton;
         public System.Windows.Forms.Label countryNameResponse;
@@ -886,6 +1048,20 @@
         public System.Windows.Forms.TextBox noDataHybridAnalysis;
         public System.Windows.Forms.TextBox noDataMetadefenderLabel;
         public System.Windows.Forms.Panel homePanel;
+        public System.Windows.Forms.TextBox noDataURLScanLabel;
+        public System.Windows.Forms.TextBox noDataMaltiverseLabel;
+        public System.Windows.Forms.TextBox noDataAbuseIPDBLabel;
+        public System.Windows.Forms.Button homeButton;
+        public System.Windows.Forms.Button mainLogo;
+
+        public SoundPlayer sound = new SoundPlayer(Properties.Resources.crackermusic);
+        public System.Windows.Forms.Label categoriesUrlLabel;
+        public System.Windows.Forms.Label categoriesUrlText;
+        public System.Windows.Forms.Panel aboutPanel;
+        public System.Windows.Forms.Button button1;
+        public System.Windows.Forms.LinkLabel githubLink;
+        public System.Windows.Forms.Label contact;
+        public System.Windows.Forms.Label credits;
     }
 }
 

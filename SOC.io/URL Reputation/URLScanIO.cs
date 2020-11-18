@@ -21,6 +21,8 @@ namespace SOCio.URL_Reputation
 
         public List<string> categories;
 
+        public bool processFinished = false;
+
         DateTime time;
 
         public URLScanIO() {
@@ -29,7 +31,7 @@ namespace SOCio.URL_Reputation
         }
 
         // TODO: Add the function for submitting an URL instead of using already existing ones. 
-        public async Task getResult(string input)
+        public async Task getResult(string webresource, string input)
         {
             try
             {
@@ -44,7 +46,7 @@ namespace SOCio.URL_Reputation
 
                 using (var httpClient = new HttpClient())
                 {
-                    using (var request = new HttpRequestMessage(new HttpMethod("GET"), "https://urlscan.io/api/v1/search/?q=domain:" + parseURL(input)))
+                    using (var request = new HttpRequestMessage(new HttpMethod("GET"), $"https://urlscan.io/api/v1/search/?q={webresource}:" + parseURL(input, webresource)))
                     {
                         var response = await httpClient.SendAsync(request);
 
@@ -55,6 +57,7 @@ namespace SOCio.URL_Reputation
                         else
                         {
                             Logger.Warn("Status code from URLScan.IO Search query is: " + response.StatusCode);
+                            processFinished = true;
                             return;
                         }
 
@@ -67,12 +70,14 @@ namespace SOCio.URL_Reputation
                             }
                             else
                             {
-
+                                processFinished = true;
+                                Logger.Error($"Error parsing response from URLScan.IO");
                             }
                         }
                         catch (Exception ex)
                         {
                             Logger.Error($"Error parsing information from URLScan.IO Search Query: {ex.StackTrace} - {ex.Message}");
+                            processFinished = true;
                         }
                     }
 
@@ -92,6 +97,7 @@ namespace SOCio.URL_Reputation
                             }
                             else
                             {
+                                processFinished = true;
                                 Logger.Warn("Status code from URLScan.IO RESULT query is: " + response.StatusCode);
                                 return;
                             }
@@ -126,16 +132,19 @@ namespace SOCio.URL_Reputation
                                         this.categories = categoriesUnparsed.Replace("[","").Replace("]","").Replace("\"","").Replace(" ","").Split(new char[] { ',' }).ToList();
                                     }
 
+                                    processFinished = true;
+
                                 }
                                 else
                                 {
                                     Logger.Error($"Error getting result from URLScan.IO");
-
+                                    processFinished = true;
                                 }
                             }
                             catch (Exception ex)
                             {
                                 Logger.Error($"Error parsing information from URLScan.IO Result query: {ex.StackTrace} - {ex.Message}");
+                                processFinished = true;
                             }
                         }
 
@@ -145,14 +154,20 @@ namespace SOCio.URL_Reputation
             }
             catch (Exception ex) {
                 Logger.Error($"Error getting URLScan.IO Info: {ex.StackTrace} - {ex.Message}");
+                processFinished = true;
             }
         }
 
 
-        private string parseURL(string input)
+        private string parseURL(string input, string webresource)
         {
             //URLScan.io presents several problems with their APIs. If you want to send an URL, it can't have http or https
             // Also, it only can parse the domain name, not differents paths. For example: www.google.com its valid, but not www.google.com/api/
+
+            if (webresource.Equals("ip")) {
+                return input;
+            }
+
             try
             {
                 string inputParsed = string.Empty;

@@ -62,6 +62,7 @@ namespace SOCio.Analyze_file
             uploadFile.InitialDirectory = @"C:\";
             uploadFile.ShowDialog();
 
+
             if (!string.IsNullOrEmpty(uploadFile.FileName)) {
                 if (uploadFile.CheckFileExists && uploadFile.CheckPathExists) {
                     this.md5 = calculateMD5(uploadFile.FileName);
@@ -204,6 +205,8 @@ namespace SOCio.Analyze_file
 
                 form.fileInfoLabel.Visible = true;
 
+                form.categoriesUrlLabel.Visible = true;
+
                 if (!string.IsNullOrEmpty(form.fileInfoText.Text)) {
                     form.fileInfoText.Text = hybridAnalysis.fileInfo;
                     form.fileInfoText.Visible = true;
@@ -217,28 +220,77 @@ namespace SOCio.Analyze_file
                     form.virusFamilyText.Visible = true;
                 }
 
+                if (hybridAnalysis.tags.Count > 0) {
+
+                    form.categoriesUrlText.Text = createStringCategories(hybridAnalysis.tags);
+                    form.categoriesUrlText.Visible = true;
+                }
+
 
             } catch (Exception ex) {
                 Logger.Error($"Error presenting HybridAnalysis Info:{ex.StackTrace} - {ex.Message}");
             }
         }
 
+        private string createStringCategories(List<string> categories) {
+            string result = string.Empty;
+
+            foreach (string cat in categories) {
+                result += cat + ",";
+            }
+
+            return result;
+        }
+
         private void createGraphHybridGraph() {
             try
             {
-                form.hybridAnalysisLabel.Visible = true;
-                form.hybridAnalysisGraph.Visible = true;
+                if (hybridAnalysis.score == int.MinValue && hybridAnalysis.verdict == string.Empty)
+                {
+                    form.noDataHybridAnalysis.Visible = true;
+                }
+                else { 
+                    form.hybridAnalysisLabel.Visible = true;
+                    form.hybridAnalysisGraph.Visible = true;
 
-                form.hybridAnalysisGraph.From = 0;
-                form.hybridAnalysisGraph.To = 100;
+                    form.hybridAnalysisGraph.From = 0;
+                    form.hybridAnalysisGraph.To = 100;
 
 
-                form.hybridAnalysisGraph.ToColor = chooseColor(hybridAnalysis.score);
-                form.hybridAnalysisGraph.Value = hybridAnalysis.score;
+                    form.hybridAnalysisGraph.ToColor = chooseColor(hybridAnalysis.score);
+
+                    if (hybridAnalysis.score != int.MinValue)
+                    {
+                        form.hybridAnalysisGraph.Value = hybridAnalysis.score;
+                    }
+                    else
+                    {
+
+                        form.hybridAnalysisGraph.Value = parseResult(hybridAnalysis.verdict);
+                    }
+                }
             }
             catch (Exception ex) {
                 Logger.Error($"Error creating Hybrid-Analysis Graph:{ex.StackTrace} - {ex.Message}" );
             }
+        }
+
+        public int parseResult(string verdict)
+        {
+            switch (verdict)
+            {
+                case "malicious":
+                    return 100;
+                case "suspicious":
+                    return 60;
+                case "neutral":
+                    return 20;
+                case "whitelisted":
+                    return 0;
+                default:
+                    return 0;
+            }
+
         }
 
 
