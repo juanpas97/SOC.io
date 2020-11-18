@@ -25,8 +25,9 @@ Modules:
 
 *  [URLScan.IO](https://urlscan.io/) - A sandbox for the web.
 
-![URL Reputation](https://i.imgur.com/nbE3xat.png =500x)
-  
+![URL Reputation](https://i.imgur.com/C0NX5M4.png)
+
+
   
 **File Analyzer:** This module will provide information for a given file. It will show the different hashes format (MD5, SHA256, SHA512) and it also can check the file in the following services:
 
@@ -35,7 +36,16 @@ Modules:
 *  [Metadefender](https://metadefender.opswat.com/?lang=en) - The world's most powerful malware sandbox
 
 >  **_NOTE:_** Only the hash will be shared with the different services. Your files are never uploaded to the website.
+
+
+Every module has its own save results where a screenshot of the module will be taken. This picture will be saved on the location defined in the "Settings Menu" and it will be automatically copied to the clipboard.
   
+
+**Settings:** In this module you can set up the different API Keys necessary to consume the different APIs. Also you can define the default location where the screenshots are saved and you can also enable the "Cracker Mode"!
+
+
+![File Analyzer](https://i.imgur.com/CivcaHc.png)
+
 
 ### Tech
 
@@ -57,7 +67,8 @@ This section is divided into new functionalities that could be added to the serv
 
 - [New functionality] Add the option to send an URL to URLScan.io for the scan
 
-- [New functionality] Add the categories of the website (Phishing, Port scanning, ...)
+- [New functionality] Add the categories of the website (Phishing, Port scanning, ...) to the URL Reputation module.
+
 
 - Misc
 
@@ -89,7 +100,7 @@ This project has been inspired by the following projects:
 
 *  [Sooty](https://github.com/TheresAFewConors/Sooty) - Sooty is a tool developed with the task of aiding SOC analysts with automating part of their workflow..
 
-*  [Malwoverview](hhttps://github.com/alexandreborges/malwoverview) - Malwoverview<nolink>.py is a simple tool to perform an initial and quick triage of malware samples, URLs and hashes.
+*  [Malwoverview](https://github.com/alexandreborges/malwoverview) - Malwoverview<nolink>.py is a simple tool to perform an initial and quick triage of malware samples, URLs and hashes.
 
   
   
