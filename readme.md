@@ -1,6 +1,9 @@
+![SOC.io Logo](https://i.imgur.com/QUlrDdO.png) 
+
+
 # SOC.&#8203;io
 
-  
+
 
 SOC.&#8203;io is a Windows all-in-one tool for cybersecurity analysts. It allows the user to quickly perform URL reputation checks and analyze the reputation of files.
 
@@ -22,6 +25,7 @@ Modules:
 
 *  [URLScan.IO](https://urlscan.io/) - A sandbox for the web.
 
+![URL Reputation](https://i.imgur.com/nbE3xat.png =500x)
   
   
 **File Analyzer:** This module will provide information for a given file. It will show the different hashes format (MD5, SHA256, SHA512) and it also can check the file in the following services:
